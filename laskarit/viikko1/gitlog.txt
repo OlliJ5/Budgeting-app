@@ -1,0 +1,116 @@
+commit 7e6cc94f9eef46a0f5d79aa0fc0b519c9590b641
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 15:34:55 2018 +0200
+
+    file1 poistettu ja file2 on nyt file22
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c6b1cf671f414f48850b43b6931e40de3fe6f9a3
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 15:26:06 2018 +0200
+
+    tiedostoja luotu
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 311f0522c6dd9070986e0ca4e67b4cf4f3263882
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 15:13:31 2018 +0200
+
+    muutoksia, addays patchin avulla
+
+ eka.txt    | 5 ++---
+ kolmas.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 9a3223c8734c4399e5edd608df43ad657e6e44f7
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 15:10:12 2018 +0200
+
+    tiedoston nimi muutettu
+
+ eka.txt      | 11 +++++++++++
+ tiedosto.txt | 11 -----------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
+
+commit 4689adeb30d9721212c48844e9b95fa1ba0ff19f
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 15:07:09 2018 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 9b4358336d4843fc0e773fb12acd022dcdcf21d2
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 15:03:26 2018 +0200
+
+    tiedostoa muutettu
+
+ tiedosto.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit 154f3bf7f531ff35bdb6a67265b266c0dda524aa
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 14:59:05 2018 +0200
+
+    paljon tekstiä lisätty
+
+ tiedosto.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit a3ee3ac2f4ef58a1c44d36df054336e489628e5d
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 14:45:38 2018 +0200
+
+    stuff tehty
+
+ stuff/jokutiedosto | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 45197870d23448945753d3d03dd3f912f59b49de
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 14:43:33 2018 +0200
+
+    toinen, kolmas muutettu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 1959871afc94051d0956ca51e2a9a172c1a8ec30
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 14:41:02 2018 +0200
+
+    kolmas lisätty
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 930ecfe88be900e77a25d030fd095c2010b3f22e
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 14:30:59 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit a4c32c3ffaab54cb5b27a5a7f57b9e9ab7d3e091
+Author: Olli Rousu <olli.rousu@hotmail.com>
+Date:   Fri Mar 16 14:24:18 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
