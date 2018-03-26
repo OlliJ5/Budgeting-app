@@ -1,4 +1,4 @@
-# Vaaimusmäärittely
+# Vaatimusmäärittely
 
 ## Sovelluksen tarkoitus
 Sovellus on budjetointisovellus, jonka avulla käyttäjät voivat pitää kirjaa omista budjeteistaan. Sovelluksen käyttö
@@ -22,7 +22,7 @@ voivat esimerkiksi poistaa normaaleja käyttäjiä.
 
 ## Jatkokehitys
 * Käyttäjä voi vaihtaa näkymää ja suunnitella viikottaisen budjetin kuukausittaisen sijaan
-* Opintotuki-counter, joka kertoo milloin opintotuki seuraava opintotuki on tulossa
+* Opintotuki-counter, joka kertoo milloin seuraava opintotuki on tulossa
 * Ylläpitäjä, joka voi poistaa ja lisätä käyttäjiä
 * Mahdollisuus kulujen kategorisointiin, esimerkiksi ruokaostokset.
 * Mahdollisuus budjetin jakamiseen eri kategorioihin
