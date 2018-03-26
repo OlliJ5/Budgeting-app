@@ -8,5 +8,10 @@ Tässä *repositoriossa* on **OTM-kurssiin** liittyviä asioita
 
 [gitlog.txt](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-Lisää githubia lisäys
-toinen lisäys
+### Viikko2
+[tehtävät](https://github.com/OlliJ5/otm-harjoitustyo/tree/master/laskarit/viikko2)
+
+## Budjetointisovellus
+
+### Dokumentaatio
+[Vaatimusmäärittely](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/vaatimusm%C3%A4%C3%A4rittely.md)
