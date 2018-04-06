@@ -35,9 +35,48 @@ public class Main extends Application{
         Label usernameText = new Label("Käyttäjätunnus: ");
         TextField nameField = new TextField();
         TextField usernameField = new TextField();
-        
         Button addButton = new Button("Luo käyttäjä");
+        Button changeToLogin = new Button("Takaisin kirjautumiseen");
         
+        GridPane createUserPane = new GridPane();
+        createUserPane.add(usernameText, 0, 0);
+        createUserPane.add(usernameField, 1, 0);
+        createUserPane.add(nameText, 0, 1);
+        createUserPane.add(nameField, 1, 1);
+        createUserPane.add(addButton, 1, 2);
+        createUserPane.add(changeToLogin, 1, 3);
+        
+        createUserPane.setHgap(10);
+        createUserPane.setVgap(10);
+        createUserPane.setPadding(new Insets(50, 50, 50, 10));
+        
+        Scene createUser = new Scene(createUserPane);
+        
+        Label usernameTextLogin = new Label("Käyttäjätunnus: ");
+        TextField usernameFieldLogin = new TextField();
+        Button loginButton = new Button("Login");
+        Button changeToCreate = new Button("Luo uusi käyttäjä");
+        
+        GridPane loginPane = new GridPane();
+        loginPane.add(usernameTextLogin, 0, 0);
+        loginPane.add(usernameFieldLogin, 1, 0);
+        loginPane.add(loginButton, 1, 2);
+        loginPane.add(changeToCreate, 1, 3);
+        
+        loginPane.setHgap(10);
+        loginPane.setVgap(10);
+        loginPane.setPadding(new Insets(50, 50, 50, 10));
+        
+        Scene login = new Scene(loginPane);
+        
+        changeToCreate.setOnAction((event)-> {
+            primaryStage.setScene(createUser);
+        });
+        
+        changeToLogin.setOnAction((event) -> {
+            primaryStage.setScene(login);
+        });
+
         addButton.setOnAction((event) -> {
             String username = usernameField.getText();
             String name = nameField.getText();
@@ -51,19 +90,7 @@ public class Main extends Application{
             }
         });
         
-        GridPane pane = new GridPane();
-        pane.add(nameText, 0, 0);
-        pane.add(nameField, 1, 0);
-        pane.add(usernameText, 0, 1);
-        pane.add(usernameField, 1, 1);
-        pane.add(addButton, 1, 2);
-        
-        pane.setHgap(10);
-        pane.setVgap(10);
-        pane.setPadding(new Insets(50, 50, 50, 10));
-        
-        Scene createUser = new Scene(pane);
-        primaryStage.setScene(createUser);
+        primaryStage.setScene(login);
         primaryStage.show();
     }
     
