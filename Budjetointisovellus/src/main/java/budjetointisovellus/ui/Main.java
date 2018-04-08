@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -61,6 +62,7 @@ public class Main extends Application{
         TextField usernameFieldLogin = new TextField();
         Button loginButton = new Button("Login");
         Button changeToCreate = new Button("Luo uusi käyttäjä");
+        Label messageLogin = new Label();
         
         GridPane loginPane = new GridPane();
         loginPane.add(usernameTextLogin, 0, 0);
@@ -74,6 +76,12 @@ public class Main extends Application{
         
         Scene login = new Scene(loginPane, 400, 250);
         
+        //Logged in Scene
+        Label loggedInAs = new Label();
+        Pane pane = new Pane();
+        pane.getChildren().add(loggedInAs);
+        Scene loggedIn = new Scene(pane, 400, 250);
+        
         //Event handlers
         
         changeToCreate.setOnAction((event)-> {
@@ -85,22 +93,37 @@ public class Main extends Application{
         });
 
         addButton.setOnAction((event) ->{
-            String username = usernameField.getText();
-            String name = nameField.getText();
+            String newUsername = usernameField.getText();
+            String newName = nameField.getText();
             usernameField.setText("");
             
             try {
-                if(budgetService.createUser(username, name, 0)) {
+                if(budgetService.createUser(newUsername, newName, 0)) {
                     nameField.setText("");
-                    message.setText("Käyttäjä " + username + " luotu");
+                    message.setText("Käyttäjä " + newUsername + " luotu");
                 } else {
-                    message.setText("Käyttäjätunnus " + username + " on jo olemassa");
+                    message.setText("Käyttäjätunnus " + newUsername + " on jo olemassa");
                 }
                 
             } catch(Exception e) {
                 System.out.println(e);
             }
             
+        });
+        
+        loginButton.setOnAction((event) -> {
+            String username = usernameFieldLogin.getText();
+            usernameFieldLogin.setText("");
+            try {
+                if(budgetService.login(username)) {
+                    loggedInAs.setText("Logged in as " + username);
+                    primaryStage.setScene(loggedIn);
+                } else {
+                    messageLogin.setText("Virheellinen käyttäjätunnus");
+                }
+            } catch(Exception e) {
+                System.out.println(e);
+            }
         });
         
         primaryStage.setScene(login);

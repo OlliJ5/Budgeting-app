@@ -37,5 +37,16 @@ public class BudgetService {
         return true;
     }
     
+    public boolean login(String username) {
+        try {
+            if(userDao.usernameExists(username)) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
 
 }
