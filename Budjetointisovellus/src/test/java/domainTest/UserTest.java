@@ -29,4 +29,5 @@ public class UserTest {
     public void constructorSetsCorretBudget() {
         assertEquals(100.0, user.getBudget(), 0.01);
     }
+    
 }

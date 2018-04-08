@@ -48,5 +48,14 @@ public class BudgetService {
         return false;
     }
     
+    public User getUser(String username) {
+        try {
+            return userDao.findByUsername(username);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+    
 
 }

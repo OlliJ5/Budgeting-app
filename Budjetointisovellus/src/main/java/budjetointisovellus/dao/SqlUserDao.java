@@ -45,5 +45,23 @@ public class SqlUserDao implements UserDao {
         connection.close();
         return false;
     }
+    
+    public User findByUsername(String username) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM User Where username = ?;");
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+        
+        if(!rs.next()) {
+            return null;
+        }
+        
+        User user = new User(rs.getString("username"), rs.getString("name"), rs.getDouble("budget"));
+        
+        stmt.close();
+        rs.close();
+        connection.close();
+        return user;
+    }
 
 }

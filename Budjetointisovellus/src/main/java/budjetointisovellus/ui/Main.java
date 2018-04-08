@@ -4,8 +4,8 @@ package budjetointisovellus.ui;
 import budjetointisovellus.dao.Database;
 import budjetointisovellus.dao.SqlExpenseDao;
 import budjetointisovellus.dao.SqlUserDao;
-import budjetointisovellus.dao.UserDao;
 import budjetointisovellus.domain.BudgetService;
+import budjetointisovellus.domain.User;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     private BudgetService budgetService;
+    private User user;
     
     @Override
     public void init() throws Exception{
@@ -116,7 +117,8 @@ public class Main extends Application{
             usernameFieldLogin.setText("");
             try {
                 if(budgetService.login(username)) {
-                    loggedInAs.setText("Logged in as " + username);
+                    this.user = budgetService.getUser(username);
+                    loggedInAs.setText("Logged in as " + this.user.getUsername());
                     primaryStage.setScene(loggedIn);
                 } else {
                     messageLogin.setText("Virheellinen käyttäjätunnus");
