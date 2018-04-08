@@ -31,12 +31,15 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Budjetointisovellus");
+
+        //Create a user Scene
         Label nameText = new Label("Nimi: ");
         Label usernameText = new Label("Käyttäjätunnus: ");
         TextField nameField = new TextField();
         TextField usernameField = new TextField();
         Button addButton = new Button("Luo käyttäjä");
         Button changeToLogin = new Button("Takaisin kirjautumiseen");
+        Label message = new Label("");
         
         GridPane createUserPane = new GridPane();
         createUserPane.add(usernameText, 0, 0);
@@ -45,13 +48,15 @@ public class Main extends Application{
         createUserPane.add(nameField, 1, 1);
         createUserPane.add(addButton, 1, 2);
         createUserPane.add(changeToLogin, 1, 3);
+        createUserPane.add(message, 1, 4);
         
         createUserPane.setHgap(10);
         createUserPane.setVgap(10);
         createUserPane.setPadding(new Insets(50, 50, 50, 10));
         
-        Scene createUser = new Scene(createUserPane);
+        Scene createUser = new Scene(createUserPane, 400, 250);
         
+        //Login Scene
         Label usernameTextLogin = new Label("Käyttäjätunnus: ");
         TextField usernameFieldLogin = new TextField();
         Button loginButton = new Button("Login");
@@ -67,7 +72,9 @@ public class Main extends Application{
         loginPane.setVgap(10);
         loginPane.setPadding(new Insets(50, 50, 50, 10));
         
-        Scene login = new Scene(loginPane);
+        Scene login = new Scene(loginPane, 400, 250);
+        
+        //Event handlers
         
         changeToCreate.setOnAction((event)-> {
             primaryStage.setScene(createUser);
@@ -77,17 +84,23 @@ public class Main extends Application{
             primaryStage.setScene(login);
         });
 
-        addButton.setOnAction((event) -> {
+        addButton.setOnAction((event) ->{
             String username = usernameField.getText();
             String name = nameField.getText();
+            usernameField.setText("");
             
-            System.out.println(username);
-            System.out.println(name);
-            
-            if(budgetService.createUser(username, name, 0)) {
-                nameField.setText("");
-                usernameField.setText("");
+            try {
+                if(budgetService.createUser(username, name, 0)) {
+                    nameField.setText("");
+                    message.setText("Käyttäjä " + username + " luotu");
+                } else {
+                    message.setText("Käyttäjätunnus " + username + " on jo olemassa");
+                }
+                
+            } catch(Exception e) {
+                System.out.println(e);
             }
+            
         });
         
         primaryStage.setScene(login);

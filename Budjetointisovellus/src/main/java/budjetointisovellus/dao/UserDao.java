@@ -7,5 +7,5 @@ import java.sql.SQLException;
 
 public interface UserDao {
     User create(User user) throws SQLException;
-    
+    boolean usernameExists(String name) throws SQLException;
 }

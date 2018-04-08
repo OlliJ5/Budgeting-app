@@ -4,6 +4,7 @@ package budjetointisovellus.domain;
 import budjetointisovellus.dao.ExpenseDao;
 import budjetointisovellus.dao.UserDao;
 import budjetointisovellus.domain.User;
+import java.sql.SQLException;
 
 
 public class BudgetService {
@@ -15,9 +16,18 @@ public class BudgetService {
         this.userDao = userDao;
     }
     
-    public boolean createUser(String username, String name, double budget) {
+    public boolean createUser(String username, String name, double budget){
+        
+        try {
+            if(userDao.usernameExists(name)) {
+                return false;
+            }
+        } catch(Exception e) {
+            return false;
+        }
+        
         User user = new User(username, name, budget);
-
+        
         try {
             userDao.create(user);
         } catch(Exception e) {
@@ -26,4 +36,6 @@ public class BudgetService {
         }
         return true;
     }
+    
+
 }
