@@ -41,7 +41,7 @@ public class Main extends Application{
         TextField usernameField = new TextField();
         Button addButton = new Button("Luo käyttäjä");
         Button changeToLogin = new Button("Takaisin kirjautumiseen");
-        Label message = new Label("");
+        Label messageCreate = new Label("");
         
         GridPane createUserPane = new GridPane();
         createUserPane.add(usernameText, 0, 0);
@@ -50,7 +50,7 @@ public class Main extends Application{
         createUserPane.add(nameField, 1, 1);
         createUserPane.add(addButton, 1, 2);
         createUserPane.add(changeToLogin, 1, 3);
-        createUserPane.add(message, 1, 4);
+        createUserPane.add(messageCreate, 1, 4);
         
         createUserPane.setHgap(10);
         createUserPane.setVgap(10);
@@ -70,6 +70,7 @@ public class Main extends Application{
         loginPane.add(usernameFieldLogin, 1, 0);
         loginPane.add(loginButton, 1, 2);
         loginPane.add(changeToCreate, 1, 3);
+        loginPane.add(messageLogin, 1, 4);
         
         loginPane.setHgap(10);
         loginPane.setVgap(10);
@@ -86,10 +87,12 @@ public class Main extends Application{
         //Event handlers
         
         changeToCreate.setOnAction((event)-> {
+            messageLogin.setText("");
             primaryStage.setScene(createUser);
         });
         
         changeToLogin.setOnAction((event) -> {
+            messageCreate.setText("");
             primaryStage.setScene(login);
         });
 
@@ -101,9 +104,9 @@ public class Main extends Application{
             try {
                 if(budgetService.createUser(newUsername, newName, 0)) {
                     nameField.setText("");
-                    message.setText("Käyttäjä " + newUsername + " luotu");
+                    messageCreate.setText("Käyttäjä " + newUsername + " luotu");
                 } else {
-                    message.setText("Käyttäjätunnus " + newUsername + " on jo olemassa");
+                    messageCreate.setText("Käyttäjätunnus " + newUsername + " on jo olemassa");
                 }
                 
             } catch(Exception e) {

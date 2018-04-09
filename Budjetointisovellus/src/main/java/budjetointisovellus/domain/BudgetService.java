@@ -19,7 +19,7 @@ public class BudgetService {
     public boolean createUser(String username, String name, double budget){
         
         try {
-            if(userDao.usernameExists(name)) {
+            if(userDao.usernameExists(username)) {
                 return false;
             }
         } catch(Exception e) {
