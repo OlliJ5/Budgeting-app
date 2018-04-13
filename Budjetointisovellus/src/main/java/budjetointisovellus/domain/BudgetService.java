@@ -16,7 +16,7 @@ public class BudgetService {
         this.userDao = userDao;
     }
     
-    public boolean createUser(String username, String name, double budget){
+    public boolean createUser(String username, String name, String password){
         
         try {
             if(userDao.usernameExists(username)) {
@@ -26,7 +26,7 @@ public class BudgetService {
             return false;
         }
         
-        User user = new User(username, name, budget);
+        User user = new User(username, name, password);
         
         try {
             userDao.create(user);
@@ -37,11 +37,9 @@ public class BudgetService {
         return true;
     }
     
-    public boolean login(String username) {
+    public boolean login(String username, String password) {
         try {
-            if(userDao.usernameExists(username)) {
-                return true;
-            }
+            return userDao.usernameAndPasswordCorrect(username, password);
         } catch (Exception e) {
             System.out.println(e);
         }

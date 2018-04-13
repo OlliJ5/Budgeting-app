@@ -12,7 +12,7 @@ public class UserTest {
 
     @Before
     public void setUp() {
-        user = new User("ogrousu", "Olli", 100.0);
+        user = new User("ogrousu", "Olli", "salasana");
     }
     
     @Test
@@ -25,9 +25,5 @@ public class UserTest {
         assertEquals("Olli", user.getName());
     }
     
-    @Test
-    public void constructorSetsCorretBudget() {
-        assertEquals(100.0, user.getBudget(), 0.01);
-    }
     
 }

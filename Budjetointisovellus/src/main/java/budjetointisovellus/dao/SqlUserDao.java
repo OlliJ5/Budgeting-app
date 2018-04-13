@@ -15,15 +15,15 @@ public class SqlUserDao implements UserDao {
     public User create(User user) throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO USER(username, name, budget) VALUES (?, ?, ?);");
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO USER(username, name, password) VALUES (?, ?, ?);");
         stmt.setString(1, user.getUsername());
         stmt.setString(2, user.getName());
-        stmt.setDouble(3, user.getBudget());
+        stmt.setString(3, user.getPassword());
         stmt.executeUpdate();
         stmt.close();
 
         connection.close();
-        return new User(user.getUsername(), user.getName(), user.getBudget());
+        return new User(user.getUsername(), user.getName(), user.getPassword());
 
     }
 
@@ -56,12 +56,39 @@ public class SqlUserDao implements UserDao {
             return null;
         }
         
-        User user = new User(rs.getString("username"), rs.getString("name"), rs.getDouble("budget"));
+        User user = new User(rs.getString("username"), rs.getString("name"), rs.getString("password"));
         
         stmt.close();
         rs.close();
         connection.close();
         return user;
+    }
+    
+    @Override
+    public boolean usernameAndPasswordCorrect(String username, String password) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM User Where username = ?;");
+        statement.setString(1, username);
+        ResultSet rs = statement.executeQuery();
+
+        if (!rs.next()) {
+            statement.close();
+            rs.close();
+            connection.close();
+            return false;
+        }
+        
+        User user = new User(rs.getString("username"), rs.getString("name"), rs.getString("password"));
+        statement.close();
+        rs.close();
+        connection.close();
+        
+        if(user.getPassword().equals(password)) {
+            return true;
+        }
+        
+        return false;
+        
     }
 
 }
