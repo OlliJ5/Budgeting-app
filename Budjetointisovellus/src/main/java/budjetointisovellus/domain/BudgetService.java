@@ -5,6 +5,7 @@ import budjetointisovellus.dao.ExpenseDao;
 import budjetointisovellus.dao.UserDao;
 import budjetointisovellus.domain.User;
 import java.sql.SQLException;
+import org.mindrot.jbcrypt.*;
 
 
 public class BudgetService {
@@ -25,8 +26,8 @@ public class BudgetService {
         } catch(Exception e) {
             return false;
         }
-        
-        User user = new User(username, name, password);
+        String pwHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        User user = new User(username, name, pwHash);
         
         try {
             userDao.create(user);

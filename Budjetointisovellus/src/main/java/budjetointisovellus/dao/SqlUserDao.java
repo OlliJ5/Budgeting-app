@@ -2,6 +2,7 @@ package budjetointisovellus.dao;
 
 import budjetointisovellus.domain.User;
 import java.sql.*;
+import org.mindrot.jbcrypt.*;
 
 public class SqlUserDao implements UserDao {
 
@@ -46,6 +47,7 @@ public class SqlUserDao implements UserDao {
         return false;
     }
     
+    @Override
     public User findByUsername(String username) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM User Where username = ?;");
@@ -83,7 +85,8 @@ public class SqlUserDao implements UserDao {
         rs.close();
         connection.close();
         
-        if(user.getPassword().equals(password)) {
+        if(BCrypt.checkpw(password, user.getPassword())) {
+            System.out.println("mätsää");
             return true;
         }
         
