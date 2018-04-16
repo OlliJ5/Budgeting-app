@@ -1,25 +1,23 @@
 package budjetointisovellus.ui;
 
-import budjetointisovellus.dao.Database;
-import budjetointisovellus.dao.SqlExpenseDao;
-import budjetointisovellus.dao.SqlUserDao;
-import budjetointisovellus.domain.BudgetService;
-import budjetointisovellus.domain.User;
+import budjetointisovellus.dao.*;
+import budjetointisovellus.domain.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class App {
@@ -35,7 +33,8 @@ public class App {
         Database database = new Database("jdbc:sqlite:budget.db");
         SqlUserDao userDao = new SqlUserDao(database);
         SqlExpenseDao expenseDao = new SqlExpenseDao(database);
-        budgetService = new BudgetService(expenseDao, userDao);
+        SqlBudgetDao budgetDao = new SqlBudgetDao(database);
+        budgetService = new BudgetService(expenseDao, userDao, budgetDao);
     }
 
     public void start() {
@@ -153,17 +152,28 @@ public class App {
         Label timeLabel = new Label(time);
         Button logOutButton = new Button("Kirjaudu ulos");
         Button createABudget = new Button("Luo uusi budjetti");
-        
+
         ToolBar toprow = new ToolBar();
         toprow.getItems().addAll(loggedInAs, timeLabel);
-        
-        ToolBar side = new ToolBar();
-        side.setOrientation(Orientation.VERTICAL);
-        side.getItems().addAll(logOutButton, createABudget);
-        
+
+        ToolBar sidePanel = new ToolBar();
+        sidePanel.setOrientation(Orientation.VERTICAL);
+        sidePanel.getItems().addAll(logOutButton, createABudget);
+
+        ChoiceBox cb = new ChoiceBox();
+
+        ArrayList<String> budgets = budgetService.findBudgets(user)
+                .stream()
+                .map(budget -> budget.getName())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        cb.setItems(FXCollections.observableArrayList(budgets));
+
         BorderPane pane = new BorderPane();
         pane.setTop(toprow);
-        pane.setLeft(side);
+        pane.setLeft(sidePanel);
+        pane.setCenter(cb);
+
         scene = new Scene(pane, 600, 400);
         primaryStage.setScene(scene);
 
@@ -171,13 +181,36 @@ public class App {
             this.user = null;
             loginScene();
         });
-        
+
         createABudget.setOnAction((event) -> {
-            Stage stage = new Stage();
-            stage.setTitle("Luo uusi budjetti");
-            Pane createNew = new Pane();
-            stage.setScene(new Scene(createNew));
-            stage.show();
+            createABudgetScene();
+        });
+    }
+
+    public void createABudgetScene() {
+        Label budgetName = new Label("Budjetin nimi: ");
+        TextField budget = new TextField();
+        Label budgetAmount = new Label("Budjetin määrä: ");
+        TextField amount = new TextField();
+        Button submit = new Button("Luo uusi");
+
+        GridPane pane = new GridPane();
+        pane.add(budgetName, 0, 0);
+        pane.add(budget, 1, 0);
+        pane.add(budgetAmount, 0, 1);
+        pane.add(amount, 1, 1);
+        pane.add(submit, 1, 2);
+
+        pane.setHgap(10);
+        pane.setVgap(10);
+        pane.setPadding(new Insets(50, 50, 50, 10));
+
+        scene = new Scene(pane, 400, 250);
+        primaryStage.setScene(scene);
+
+        submit.setOnAction((event) -> {
+            budgetService.createBudget(new Budget(budget.getText(), Double.parseDouble(amount.getText())), this.user);
+            loggedInScene();
         });
     }
 

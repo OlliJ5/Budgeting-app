@@ -10,4 +10,12 @@ public class Budget {
         this.amount = amount;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

@@ -24,7 +24,7 @@ public class SqlUserDao implements UserDao {
         stmt.close();
 
         connection.close();
-        return new User(user.getUsername(), user.getName(), user.getPassword());
+        return user;
 
     }
 

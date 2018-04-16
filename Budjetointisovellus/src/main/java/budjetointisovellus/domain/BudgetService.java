@@ -1,19 +1,22 @@
 package budjetointisovellus.domain;
 
+import budjetointisovellus.dao.BudgetDao;
 import budjetointisovellus.dao.ExpenseDao;
 import budjetointisovellus.dao.UserDao;
-import budjetointisovellus.domain.User;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.mindrot.jbcrypt.*;
 
 public class BudgetService {
 
     private ExpenseDao expenseDao;
     private UserDao userDao;
+    private BudgetDao budgetDao;
 
-    public BudgetService(ExpenseDao expenseDao, UserDao userDao) {
+    public BudgetService(ExpenseDao expenseDao, UserDao userDao, BudgetDao budgetDao) {
         this.expenseDao = expenseDao;
         this.userDao = userDao;
+        this.budgetDao = budgetDao;
     }
 
     public boolean createUser(String username, String name, String password) {
@@ -53,6 +56,27 @@ public class BudgetService {
             System.out.println(e);
         }
         return null;
+    }
+
+    public boolean createBudget(Budget budget, User user) {
+        try {
+            budgetDao.create(budget, user.getUsername());
+            return true;
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+            return false;
+        }
+    }
+
+    public List<Budget> findBudgets(User user) {
+        List<Budget> budgets = new ArrayList<>();
+        try {
+            budgets = budgetDao.findBudgetsByUsername(user.getUsername());
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+        }
+
+        return budgets;
     }
 
 }
