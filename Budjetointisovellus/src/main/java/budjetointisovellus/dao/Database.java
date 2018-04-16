@@ -2,7 +2,7 @@ package budjetointisovellus.dao;
 
 import java.sql.*;
 
-public class Database{
+public class Database {
 
     private String databaseAddress;
 

@@ -25,5 +25,28 @@ public class UserTest {
         assertEquals("Olli", user.getName());
     }
     
+    @Test
+    public void constructorSetCorrectPassword() {
+        assertEquals("salasana", user.getPassword());
+    }
+    
+    @Test
+    public void setNameWorks() {
+        user.setName("Olli Rousu");
+        assertEquals("Olli Rousu", user.getName());
+    }
+    
+    @Test
+    public void setUsernameWorks() {
+        user.setUsername("ollirousu");
+        assertEquals("ollirousu", user.getUsername());
+    }
+    
+    @Test
+    public void setPasswordWorkd() {
+        user.setPassword("salainensalasana");
+        assertEquals("salainensalasana", user.getPassword());
+    }
+    
     
 }
