@@ -46,26 +46,26 @@ public class SqlUserDao implements UserDao {
         connection.close();
         return false;
     }
-    
+
     @Override
     public User findByUsername(String username) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM User Where username = ?;");
         stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
-        
-        if(!rs.next()) {
+
+        if (!rs.next()) {
             return null;
         }
-        
+
         User user = new User(rs.getString("username"), rs.getString("name"), rs.getString("password"));
-        
+
         stmt.close();
         rs.close();
         connection.close();
         return user;
     }
-    
+
     @Override
     public boolean usernameAndPasswordCorrect(String username, String password) throws SQLException {
         Connection connection = database.getConnection();
@@ -79,19 +79,18 @@ public class SqlUserDao implements UserDao {
             connection.close();
             return false;
         }
-        
+
         User user = new User(rs.getString("username"), rs.getString("name"), rs.getString("password"));
         statement.close();
         rs.close();
         connection.close();
-        
-        if(BCrypt.checkpw(password, user.getPassword())) {
-            System.out.println("mätsää");
+
+        if (BCrypt.checkpw(password, user.getPassword())) {
             return true;
         }
-        
+
         return false;
-        
+
     }
 
 }

@@ -10,5 +10,5 @@ package budjetointisovellus.dao;
  * @author ogrousu
  */
 public interface ExpenseDao {
-    
+
 }

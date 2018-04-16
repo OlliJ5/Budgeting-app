@@ -1,4 +1,3 @@
-
 package budjetointisovellus.domain;
 
 import budjetointisovellus.dao.ExpenseDao;
@@ -7,8 +6,8 @@ import budjetointisovellus.domain.User;
 import java.sql.SQLException;
 import org.mindrot.jbcrypt.*;
 
-
 public class BudgetService {
+
     private ExpenseDao expenseDao;
     private UserDao userDao;
 
@@ -16,28 +15,28 @@ public class BudgetService {
         this.expenseDao = expenseDao;
         this.userDao = userDao;
     }
-    
-    public boolean createUser(String username, String name, String password){
-        
+
+    public boolean createUser(String username, String name, String password) {
+
         try {
-            if(userDao.usernameExists(username)) {
+            if (userDao.usernameExists(username)) {
                 return false;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
         String pwHash = BCrypt.hashpw(password, BCrypt.gensalt());
         User user = new User(username, name, pwHash);
-        
+
         try {
             userDao.create(user);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Virhe: " + e);
             return false;
         }
         return true;
     }
-    
+
     public boolean login(String username, String password) {
         try {
             return userDao.usernameAndPasswordCorrect(username, password);
@@ -46,15 +45,14 @@ public class BudgetService {
         }
         return false;
     }
-    
+
     public User getUser(String username) {
         try {
             return userDao.findByUsername(username);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
     }
-    
 
 }

@@ -1,8 +1,7 @@
-
 package budjetointisovellus.domain;
 
-
 public class Expense {
+
     private String name;
     private double price;
 
@@ -14,10 +13,9 @@ public class Expense {
     public String getName() {
         return this.name;
     }
-    
+
     public double getPrice() {
         return this.price;
     }
-    
-}
 
+}

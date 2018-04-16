@@ -1,8 +1,7 @@
-
 package budjetointisovellus.domain;
 
-
 public class Budget {
+
     private String name;
     private double amount;
 
@@ -10,6 +9,5 @@ public class Budget {
         this.name = name;
         this.amount = amount;
     }
-    
-    
+
 }
