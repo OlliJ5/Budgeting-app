@@ -38,4 +38,28 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        return true;
+    }
+
 }

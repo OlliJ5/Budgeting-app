@@ -34,7 +34,6 @@ public class BudgetService {
         try {
             userDao.create(user);
         } catch (Exception e) {
-            System.out.println("Virhe: " + e);
             return false;
         }
         return true;
