@@ -11,6 +11,12 @@ Projekti kurssille Ohjelmistotekniikan menetelmät
 
 ## Komentorivikomennot
 
+### Suoritus
+Ohjelman voi suorittaa komennolla
+```
+mvn compile exec:java -Dexec.mainClass=budjetointisovellus.ui.Main
+```
+
 ### Testaus
 
 Testit suoritetaan komennolla 
