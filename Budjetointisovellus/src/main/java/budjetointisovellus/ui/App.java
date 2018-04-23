@@ -5,6 +5,7 @@ import budjetointisovellus.domain.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -14,10 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class App {
@@ -165,6 +170,7 @@ public class App {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         cb.setItems(FXCollections.observableArrayList(budgets));
+        cb.getSelectionModel().select(0);
 
         ToolBar sidePanel = new ToolBar();
         sidePanel.setOrientation(Orientation.VERTICAL);
@@ -187,13 +193,43 @@ public class App {
 
         expenseCreation.setHgap(10);
         expenseCreation.setVgap(10);
+        
+        TableView table = new TableView();
+        table.setEditable(true);
+        
+        TableColumn<Expense, String> nameCol = new TableColumn<>("Kulu");
+        nameCol.setMinWidth(200);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<Expense, Double> priceCol = new TableColumn<>("Hinta");
+        priceCol.setMinWidth(150);
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        
+        Label budgetName = new Label();
+        if(cb.getValue() != null) {
+            budgetName.setText(cb.getValue().toString());
+        }
 
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(10, 0, 0, 10));
+        vbox.getChildren().addAll(budgetName, table);
+        
+        List<Expense> expenses = new ArrayList<>();
+        if(cb.getValue() != null) {
+            expenses = budgetService.findBudgetsExpenses(cb.getValue().toString(), user.getUsername());
+        }
+
+        table.getColumns().addAll(nameCol, priceCol);
+        table.setItems(FXCollections.observableArrayList(expenses));
+        
         BorderPane pane = new BorderPane();
         pane.setTop(toprow);
         pane.setLeft(sidePanel);
-        pane.setCenter(expenseCreation);
+        pane.setRight(expenseCreation);
+        pane.setCenter(vbox);
         
-        scene = new Scene(pane, 600, 400);
+        scene = new Scene(pane, 800, 500);
         primaryStage.setScene(scene);
 
         logOutButton.setOnAction((event) -> {
@@ -206,6 +242,10 @@ public class App {
         });
         
         addButton.setOnAction((event) -> {
+            if(cb.getValue() == null) {
+                notification.setText("Valitse muokattava budjetti!");
+                return;
+            }
             if(budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
                 notification.setText("Kulu lisätty!");
             }

@@ -74,16 +74,27 @@ public class BudgetService {
             return false;
         }
     }
-    
+
     public boolean createExpense(String username, String budgetName, String expenseName, Double price) {
         try {
             int id = budgetDao.getIdByNameAndUsername(username, budgetName);
             expenseDao.create(id, expenseName, price);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
-        
+
         return true;
+    }
+
+    public List<Expense> findBudgetsExpenses(String budgetName, String username) {
+        List<Expense> expenses = new ArrayList<>();
+        try {
+            int id = budgetDao.getIdByNameAndUsername(username, budgetName);
+            expenses = expenseDao.getAllFromABudget(id); 
+        } catch(Exception e) {
+            System.out.println("Virhe: " + e);
+        }
+        return expenses;
     }
 
     public List<Budget> findBudgets(User user) {
