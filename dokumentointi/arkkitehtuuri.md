@@ -9,3 +9,5 @@
 ## Päätoiminnallisuudet
 
 ## Kirjautuminen
+
+<img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/loginDiagram.png" width="800">
