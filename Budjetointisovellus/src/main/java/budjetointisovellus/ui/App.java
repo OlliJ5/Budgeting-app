@@ -22,6 +22,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -181,23 +182,17 @@ public class App {
         sidePanel.setOrientation(Orientation.VERTICAL);
         sidePanel.getItems().addAll(logOutButton, createABudget, edit, cb);
 
-        Label expenseText = new Label("Nimi: ");
-        Label priceText = new Label("Hinta: ");
-        TextField expenseName = new TextField();
-        TextField expensePrice = new TextField();
-        Button addButton = new Button("Lisää kulu");
-        Label notification = new Label();
 
-        GridPane expenseCreation = new GridPane();
-        expenseCreation.add(expenseText, 0, 0);
-        expenseCreation.add(expenseName, 1, 0);
-        expenseCreation.add(priceText, 0, 1);
-        expenseCreation.add(expensePrice, 1, 1);
-        expenseCreation.add(addButton, 1, 2);
-        expenseCreation.add(notification, 1, 3);
-
-        expenseCreation.setHgap(10);
-        expenseCreation.setVgap(10);
+//        GridPane expenseCreation = new GridPane();
+//        expenseCreation.add(expenseText, 0, 0);
+//        expenseCreation.add(expenseName, 1, 0);
+//        expenseCreation.add(priceText, 0, 1);
+//        expenseCreation.add(expensePrice, 1, 1);
+//        expenseCreation.add(addButton, 1, 2);
+//        expenseCreation.add(notification, 1, 3);
+//
+//        expenseCreation.setHgap(10);
+//        expenseCreation.setVgap(10);
 
         TableView table = new TableView();
         table.setEditable(true);
@@ -210,6 +205,20 @@ public class App {
         priceCol.setMinWidth(180);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        TextField expenseName = new TextField();
+        expenseName.setPromptText("Kulun nimi");
+        expenseName.setMinWidth(nameCol.getPrefWidth());
+        TextField expensePrice = new TextField();
+        expensePrice.setPromptText("Kulun hinta");
+        expensePrice.setMinWidth(priceCol.getPrefWidth());
+        Button addButton = new Button("Lisää");
+        
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(expenseName, expensePrice, addButton);
+        hbox.setSpacing(10);
+        
+        Label notification = new Label();
+
         Label tableHeader = new Label();
         if (cb.getValue() != null) {
             tableHeader.setText(cb.getValue().toString());
@@ -218,7 +227,7 @@ public class App {
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(tableHeader, table);
+        vbox.getChildren().addAll(tableHeader, table, hbox, notification);
 
         List<Expense> expenses = new ArrayList<>();
         if (cb.getValue() != null) {
@@ -237,10 +246,9 @@ public class App {
         BorderPane pane = new BorderPane();
         pane.setTop(toprow);
         pane.setLeft(sidePanel);
-        pane.setRight(expenseCreation);
         pane.setCenter(vbox);
 
-        scene = new Scene(pane, 800, 500);
+        scene = new Scene(pane, 800, 600);
         primaryStage.setScene(scene);
 
         logOutButton.setOnAction((event) -> {
