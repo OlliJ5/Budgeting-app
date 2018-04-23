@@ -84,7 +84,7 @@ public class App {
             try {
                 if (budgetService.login(username, password)) {
                     this.user = budgetService.getUser(username);
-                    loggedInScene();
+                    loggedInScene(null);
                 } else {
                     messageLogin.setText("Virheellinen käyttäjätunnus tai salasana");
                 }
@@ -150,7 +150,7 @@ public class App {
         });
     }
 
-    public void loggedInScene() {
+    public void loggedInScene(String budgetName) {
         String time = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 
         Label loggedInAs = new Label("Tervetuloa " + this.user.getName());
@@ -170,7 +170,12 @@ public class App {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         cb.setItems(FXCollections.observableArrayList(budgets));
-        cb.getSelectionModel().select(0);
+        
+        if(budgetName == null) {
+            cb.getSelectionModel().select(0);
+        } else {
+            cb.setValue(budgetName);
+        }
 
         ToolBar sidePanel = new ToolBar();
         sidePanel.setOrientation(Orientation.VERTICAL);
@@ -193,42 +198,48 @@ public class App {
 
         expenseCreation.setHgap(10);
         expenseCreation.setVgap(10);
-        
+
         TableView table = new TableView();
         table.setEditable(true);
-        
+
         TableColumn<Expense, String> nameCol = new TableColumn<>("Kulu");
         nameCol.setMinWidth(200);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        
+
         TableColumn<Expense, Double> priceCol = new TableColumn<>("Hinta");
-        priceCol.setMinWidth(150);
+        priceCol.setMinWidth(180);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        
-        Label budgetName = new Label();
-        if(cb.getValue() != null) {
-            budgetName.setText(cb.getValue().toString());
+
+        Label tableHeader = new Label();
+        if (cb.getValue() != null) {
+            tableHeader.setText(cb.getValue().toString());
         }
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(budgetName, table);
-        
+        vbox.getChildren().addAll(tableHeader, table);
+
         List<Expense> expenses = new ArrayList<>();
         if(cb.getValue() != null) {
             expenses = budgetService.findBudgetsExpenses(cb.getValue().toString(), user.getUsername());
         }
 
+        cb.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if (newValue != null) {
+                loggedInScene(newValue.toString());
+            }
+        });
+
         table.getColumns().addAll(nameCol, priceCol);
         table.setItems(FXCollections.observableArrayList(expenses));
-        
+
         BorderPane pane = new BorderPane();
         pane.setTop(toprow);
         pane.setLeft(sidePanel);
         pane.setRight(expenseCreation);
         pane.setCenter(vbox);
-        
+
         scene = new Scene(pane, 800, 500);
         primaryStage.setScene(scene);
 
@@ -240,14 +251,15 @@ public class App {
         createABudget.setOnAction((event) -> {
             createABudgetScene();
         });
-        
+
         addButton.setOnAction((event) -> {
-            if(cb.getValue() == null) {
+            if (cb.getValue() == null) {
                 notification.setText("Valitse muokattava budjetti!");
                 return;
             }
-            if(budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
+            if (budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
                 notification.setText("Kulu lisätty!");
+                loggedInScene(cb.getValue().toString());
             }
             expensePrice.setText("");
             expenseName.setText("");
@@ -283,7 +295,7 @@ public class App {
             Budget newBudget = new Budget(budget.getText(), Double.parseDouble(amount.getText()));
             try {
                 if (budgetService.createBudget(newBudget, user)) {
-                    loggedInScene();
+                    loggedInScene(null);
                 } else {
                     notification.setText("Saman niminen budjetti on jo olemassa");
                 }
@@ -294,7 +306,7 @@ public class App {
         });
 
         changeScene.setOnAction((event) -> {
-            loggedInScene();
+            loggedInScene(null);
         });
     }
 
