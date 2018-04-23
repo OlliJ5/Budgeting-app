@@ -170,8 +170,8 @@ public class App {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         cb.setItems(FXCollections.observableArrayList(budgets));
-        
-        if(budgetName == null) {
+
+        if (budgetName == null) {
             cb.getSelectionModel().select(0);
         } else {
             cb.setValue(budgetName);
@@ -221,7 +221,7 @@ public class App {
         vbox.getChildren().addAll(tableHeader, table);
 
         List<Expense> expenses = new ArrayList<>();
-        if(cb.getValue() != null) {
+        if (cb.getValue() != null) {
             expenses = budgetService.findBudgetsExpenses(cb.getValue().toString(), user.getUsername());
         }
 
@@ -256,7 +256,11 @@ public class App {
             if (cb.getValue() == null) {
                 notification.setText("Valitse muokattava budjetti!");
                 return;
+            } else if(!isDouble(expensePrice, expensePrice.getText())) {
+                notification.setText(expensePrice.getText() + " ei ole luku!");
+                return;
             }
+            
             if (budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
                 notification.setText("Kulu lisätty!");
                 loggedInScene(cb.getValue().toString());
@@ -292,6 +296,11 @@ public class App {
         primaryStage.setScene(scene);
 
         submit.setOnAction((event) -> {
+            if (!isDouble(amount, amount.getText())) {
+                notification.setText(amount.getText() + " ei ole luku");
+                return;
+            }
+
             Budget newBudget = new Budget(budget.getText(), Double.parseDouble(amount.getText()));
             try {
                 if (budgetService.createBudget(newBudget, user)) {
@@ -308,6 +317,15 @@ public class App {
         changeScene.setOnAction((event) -> {
             loggedInScene(null);
         });
+    }
+
+    public boolean isDouble(TextField input, String message) {
+        try {
+            Double number = Double.parseDouble(input.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

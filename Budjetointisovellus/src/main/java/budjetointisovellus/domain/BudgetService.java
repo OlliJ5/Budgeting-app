@@ -41,9 +41,10 @@ public class BudgetService {
 
     public boolean login(String username, String password) {
         try {
-            return userDao.usernameAndPasswordCorrect(username, password);
+            if (userDao.usernameAndPasswordCorrect(username, password)) {
+                return true;
+            }
         } catch (Exception e) {
-            System.out.println(e);
         }
         return false;
     }
@@ -52,7 +53,6 @@ public class BudgetService {
         try {
             return userDao.findByUsername(username);
         } catch (Exception e) {
-            System.out.println(e);
         }
         return null;
     }
@@ -70,7 +70,6 @@ public class BudgetService {
             budgetDao.create(budget, user.getUsername());
             return true;
         } catch (Exception e) {
-            System.out.println("Virhe: " + e);
             return false;
         }
     }
@@ -90,9 +89,8 @@ public class BudgetService {
         List<Expense> expenses = new ArrayList<>();
         try {
             int id = budgetDao.getIdByNameAndUsername(username, budgetName);
-            expenses = expenseDao.getAllFromABudget(id); 
-        } catch(Exception e) {
-            System.out.println("Virhe: " + e);
+            expenses = expenseDao.getAllFromABudget(id);
+        } catch (Exception e) {
         }
         return expenses;
     }
@@ -102,9 +100,7 @@ public class BudgetService {
         try {
             budgets = budgetDao.findBudgetsByUsername(user.getUsername());
         } catch (Exception e) {
-            System.out.println("Virhe: " + e);
         }
-
         return budgets;
     }
 
