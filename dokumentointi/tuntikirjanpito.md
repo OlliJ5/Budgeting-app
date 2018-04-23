@@ -14,3 +14,10 @@
 | |3|Kirjautuneen käyttäjän näkymää paranneltu + käyttäjä voi luoda uusia budjetteja
 | |1|Repon siistimistä ja parantelua sekä sovelluksen rakenteen miettimistä
 |17.4.|2|Testejä ja paketti/luokkakaavion luonti
+|23.4.|1.5|Budjetin luomisen parantamista
+| |2|Kulujen lisääminen budjetteihin ja niiden meneminen tietokantaan
+| |2|Kulut saadaan näkyville taulukkoon
+| |0.5|Sekvenssikaavion piirtäminen
+|24.4.|0.5|Inputtien validointi ja kirjautuneen käyttäjän näkymän parantelu
+| |1.5| Testejä
+
