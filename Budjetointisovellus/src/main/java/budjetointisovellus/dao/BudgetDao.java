@@ -11,4 +11,6 @@ public interface BudgetDao {
     boolean budgetExists(Budget budget, String username) throws SQLException;
 
     List<Budget> findBudgetsByUsername(String username) throws SQLException;
+    
+    int getIdByNameAndUsername(String username, String budgetName) throws SQLException;
 }

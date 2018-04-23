@@ -175,6 +175,7 @@ public class App {
         TextField expenseName = new TextField();
         TextField expensePrice = new TextField();
         Button addButton = new Button("Lisää kulu");
+        Label notification = new Label();
 
         GridPane expenseCreation = new GridPane();
         expenseCreation.add(expenseText, 0, 0);
@@ -182,6 +183,7 @@ public class App {
         expenseCreation.add(priceText, 0, 1);
         expenseCreation.add(expensePrice, 1, 1);
         expenseCreation.add(addButton, 1, 2);
+        expenseCreation.add(notification, 1, 3);
 
         expenseCreation.setHgap(10);
         expenseCreation.setVgap(10);
@@ -201,6 +203,14 @@ public class App {
 
         createABudget.setOnAction((event) -> {
             createABudgetScene();
+        });
+        
+        addButton.setOnAction((event) -> {
+            if(budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
+                notification.setText("Kulu lisätty!");
+            }
+            expensePrice.setText("");
+            expenseName.setText("");
         });
     }
 

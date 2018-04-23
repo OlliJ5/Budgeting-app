@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package budjetointisovellus.dao;
 
-/**
- *
- * @author ogrousu
- */
-public interface ExpenseDao {
+import budjetointisovellus.domain.Expense;
+import java.sql.SQLException;
 
+
+public interface ExpenseDao {
+    Expense create(int id, String name, Double price) throws SQLException;
 }

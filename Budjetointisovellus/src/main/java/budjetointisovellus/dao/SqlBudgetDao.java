@@ -28,6 +28,21 @@ public class SqlBudgetDao implements BudgetDao {
     }
 
     @Override
+    public int getIdByNameAndUsername(String username, String budgetName) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Budget WHERE user_username = (?) AND name = (?);");
+        statement.setString(1, username);
+        statement.setString(2, budgetName);
+        ResultSet rs = statement.executeQuery();
+
+        int id = rs.getInt("id");
+        statement.close();
+        rs.close();
+        connection.close();
+        return id;
+    }
+
+    @Override
     public boolean budgetExists(Budget budget, String username) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Budget WHERE user_username = ? AND name = ?;");

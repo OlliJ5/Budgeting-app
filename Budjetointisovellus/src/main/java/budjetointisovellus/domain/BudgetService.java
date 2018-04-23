@@ -74,6 +74,17 @@ public class BudgetService {
             return false;
         }
     }
+    
+    public boolean createExpense(String username, String budgetName, String expenseName, Double price) {
+        try {
+            int id = budgetDao.getIdByNameAndUsername(username, budgetName);
+            expenseDao.create(id, expenseName, price);
+        } catch(Exception e) {
+            return false;
+        }
+        
+        return true;
+    }
 
     public List<Budget> findBudgets(User user) {
         List<Budget> budgets = new ArrayList<>();
