@@ -152,13 +152,10 @@ public class App {
         Label timeLabel = new Label(time);
         Button logOutButton = new Button("Kirjaudu ulos");
         Button createABudget = new Button("Luo uusi budjetti");
+        Label edit = new Label("Valitse muokattava budjetti: ");
 
         ToolBar toprow = new ToolBar();
         toprow.getItems().addAll(loggedInAs, timeLabel);
-
-        ToolBar sidePanel = new ToolBar();
-        sidePanel.setOrientation(Orientation.VERTICAL);
-        sidePanel.getItems().addAll(logOutButton, createABudget);
 
         ChoiceBox cb = new ChoiceBox();
 
@@ -169,11 +166,31 @@ public class App {
 
         cb.setItems(FXCollections.observableArrayList(budgets));
 
+        ToolBar sidePanel = new ToolBar();
+        sidePanel.setOrientation(Orientation.VERTICAL);
+        sidePanel.getItems().addAll(logOutButton, createABudget, edit, cb);
+
+        Label expenseText = new Label("Nimi: ");
+        Label priceText = new Label("Hinta: ");
+        TextField expenseName = new TextField();
+        TextField expensePrice = new TextField();
+        Button addButton = new Button("Lisää kulu");
+
+        GridPane expenseCreation = new GridPane();
+        expenseCreation.add(expenseText, 0, 0);
+        expenseCreation.add(expenseName, 1, 0);
+        expenseCreation.add(priceText, 0, 1);
+        expenseCreation.add(expensePrice, 1, 1);
+        expenseCreation.add(addButton, 1, 2);
+
+        expenseCreation.setHgap(10);
+        expenseCreation.setVgap(10);
+
         BorderPane pane = new BorderPane();
         pane.setTop(toprow);
         pane.setLeft(sidePanel);
-        pane.setCenter(cb);
-
+        pane.setCenter(expenseCreation);
+        
         scene = new Scene(pane, 600, 400);
         primaryStage.setScene(scene);
 
@@ -193,6 +210,8 @@ public class App {
         Label budgetAmount = new Label("Budjetin määrä: ");
         TextField amount = new TextField();
         Button submit = new Button("Luo uusi");
+        Button changeScene = new Button("Palaa");
+        Label notification = new Label("");
 
         GridPane pane = new GridPane();
         pane.add(budgetName, 0, 0);
@@ -200,6 +219,8 @@ public class App {
         pane.add(budgetAmount, 0, 1);
         pane.add(amount, 1, 1);
         pane.add(submit, 1, 2);
+        pane.add(changeScene, 1, 3);
+        pane.add(notification, 1, 4);
 
         pane.setHgap(10);
         pane.setVgap(10);
@@ -209,7 +230,20 @@ public class App {
         primaryStage.setScene(scene);
 
         submit.setOnAction((event) -> {
-            budgetService.createBudget(new Budget(budget.getText(), Double.parseDouble(amount.getText())), this.user);
+            Budget newBudget = new Budget(budget.getText(), Double.parseDouble(amount.getText()));
+            try {
+                if (budgetService.createBudget(newBudget, user)) {
+                    loggedInScene();
+                } else {
+                    notification.setText("Saman niminen budjetti on jo olemassa");
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        });
+
+        changeScene.setOnAction((event) -> {
             loggedInScene();
         });
     }

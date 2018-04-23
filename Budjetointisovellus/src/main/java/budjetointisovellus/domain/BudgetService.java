@@ -59,6 +59,14 @@ public class BudgetService {
 
     public boolean createBudget(Budget budget, User user) {
         try {
+            if (budgetDao.budgetExists(budget, user.getUsername())) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        try {
             budgetDao.create(budget, user.getUsername());
             return true;
         } catch (Exception e) {
