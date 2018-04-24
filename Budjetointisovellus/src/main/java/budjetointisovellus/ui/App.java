@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -23,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -67,9 +69,9 @@ public class App {
 
         loginPane.setHgap(10);
         loginPane.setVgap(10);
-        loginPane.setPadding(new Insets(50, 50, 50, 10));
+        loginPane.setPadding(new Insets(200, 210, 200, 230));
 
-        scene = new Scene(loginPane, 400, 250);
+        scene = new Scene(loginPane, 820, 600);
         primaryStage.setScene(scene);
 
         changeToCreate.setOnAction((event) -> {
@@ -119,9 +121,9 @@ public class App {
 
         createUserPane.setHgap(10);
         createUserPane.setVgap(10);
-        createUserPane.setPadding(new Insets(50, 50, 50, 10));
+        createUserPane.setPadding(new Insets(200, 210, 200, 230));
 
-        scene = new Scene(createUserPane, 400, 250);
+        scene = new Scene(createUserPane, 820, 600);
         primaryStage.setScene(scene);
 
         changeToLogin.setOnAction((event) -> {
@@ -161,6 +163,7 @@ public class App {
 
         ToolBar toprow = new ToolBar();
         toprow.getItems().addAll(loggedInAs, timeLabel);
+        toprow.setPadding(new Insets(10, 30, 10, 30));
 
         Label edit = new Label("Valitse muokattava budjetti: ");
         ChoiceBox cb = new ChoiceBox();
@@ -180,11 +183,18 @@ public class App {
 
         VBox rightSide = new VBox();
         rightSide.getChildren().addAll(edit, cb);
-        rightSide.setPadding(new Insets(10, 10, 10, 10));
+        rightSide.setSpacing(10);
+        rightSide.setPadding(new Insets(30, 20, 10, 20));
+
+        VBox leftSide = new VBox();
+        leftSide.getChildren().addAll(logOutButton, createABudget);
+        leftSide.setSpacing(15);
+        leftSide.setPadding(new Insets(10, 10, 10, 10));
 
         ToolBar sidePanel = new ToolBar();
         sidePanel.setOrientation(Orientation.VERTICAL);
-        sidePanel.getItems().addAll(logOutButton, createABudget);
+        sidePanel.getItems().add(leftSide);
+        sidePanel.setPadding(new Insets(10, 10, 10, 10));
 
         TableView table = new TableView();
         table.setEditable(true);
@@ -207,18 +217,27 @@ public class App {
 
         HBox hbox = new HBox();
         hbox.getChildren().addAll(expenseName, expensePrice, addButton);
-        hbox.setSpacing(10);
+        hbox.setSpacing(5);
 
         Label notification = new Label();
 
-        Label tableHeader = new Label();
+        Button deleteBudgetButton = new Button("Poista bujetti");
+        Label tableName = new Label();
+        tableName.setPadding(new Insets(5, 0, 0, 0));
         if (cb.getValue() != null) {
-            tableHeader.setText(cb.getValue().toString());
+            tableName.setText(cb.getValue().toString() + " (" + budgetService.getBudgetByName(cb.getValue().toString(), user).getAmount() + ")");
         }
 
+        HBox tableHeader = new HBox();
+        if (!budgets.isEmpty()) {
+            tableHeader.getChildren().addAll(tableName, deleteBudgetButton);
+        }
+        tableHeader.setSpacing(10);
+        tableHeader.setPadding(new Insets(10, 10, 10, 10));
+
         VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
+        vbox.setPadding(new Insets(10, 5, 15, 15));
+        vbox.setSpacing(10);
         vbox.getChildren().addAll(tableHeader, table, hbox, notification);
 
         List<Expense> expenses = new ArrayList<>();
@@ -241,7 +260,7 @@ public class App {
         pane.setCenter(vbox);
         pane.setRight(rightSide);
 
-        scene = new Scene(pane, 800, 600);
+        scene = new Scene(pane, 820, 600);
         primaryStage.setScene(scene);
 
         logOutButton.setOnAction((event) -> {
@@ -269,6 +288,13 @@ public class App {
             expensePrice.setText("");
             expenseName.setText("");
         });
+
+        deleteBudgetButton.setOnAction((event) -> {
+            budgetService.deleteBudget(budget, user);
+            budgets.remove(cb.getValue().toString());
+            cb.getSelectionModel().select(0);
+            loggedInScene(budgetService.getBudgetByName(cb.getValue().toString(), user));
+        });
     }
 
     public void createABudgetScene() {
@@ -291,9 +317,9 @@ public class App {
 
         pane.setHgap(10);
         pane.setVgap(10);
-        pane.setPadding(new Insets(50, 50, 50, 10));
+        pane.setPadding(new Insets(200, 210, 200, 230));
 
-        scene = new Scene(pane, 400, 250);
+        scene = new Scene(pane, 820, 600);
         primaryStage.setScene(scene);
 
         submit.setOnAction((event) -> {

@@ -112,4 +112,13 @@ public class BudgetService {
         return null;
     }
 
+    public boolean deleteBudget(Budget budget, User user) {
+        try {
+            budgetDao.delete(budget, user.getUsername());
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
 }

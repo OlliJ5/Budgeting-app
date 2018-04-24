@@ -15,4 +15,6 @@ public interface BudgetDao {
     int getIdByNameAndUsername(String username, String budgetName) throws SQLException;
 
     Budget findOne(String budgetName, String username) throws SQLException;
+
+    void delete(Budget budget, String username) throws SQLException;
 }

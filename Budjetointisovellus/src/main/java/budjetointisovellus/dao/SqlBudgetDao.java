@@ -105,4 +105,15 @@ public class SqlBudgetDao implements BudgetDao {
         return budget;
     }
 
+    @Override
+    public void delete(Budget budget, String username) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Budget WHERE user_username = (?) AND name = (?);");
+        statement.setString(1, username);
+        statement.setString(2, budget.getName());
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
 }
