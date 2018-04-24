@@ -104,4 +104,12 @@ public class BudgetService {
         return budgets;
     }
 
+    public Budget getBudgetByName(String budgetName, User user) {
+        try {
+            return budgetDao.findOne(budgetName, user.getUsername());
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
 }

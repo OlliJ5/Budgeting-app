@@ -18,7 +18,7 @@ public class ExpenseTest {
     public void constructorSetsCorrectName() {
         assertEquals("ruokailu", expense.getName());
     }
-    
+
     @Test
     public void constructorSetsCorrectPrice() {
         assertEquals(20.0, this.expense.getPrice(), 0.0001);

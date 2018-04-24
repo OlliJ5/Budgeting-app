@@ -29,8 +29,8 @@ public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public boolean budgetExists(Budget budget, String username) throws SQLException {
-        for(Budget b : budgets) {
-            if(b.getName().equals(budget.getName())) {
+        for (Budget b : budgets) {
+            if (b.getName().equals(budget.getName())) {
                 return true;
             }
         }
@@ -39,12 +39,17 @@ public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public int getIdByNameAndUsername(String username, String budgetName) throws SQLException {
-        for(int i = 0; i < budgets.size(); i++) {
-            if(budgets.get(i).getName().equals(budgetName)) {
+        for (int i = 0; i < budgets.size(); i++) {
+            if (budgets.get(i).getName().equals(budgetName)) {
                 return i + 1;
             }
         }
         return 0;
+    }
+
+    @Override
+    public Budget findOne(String budgetName, String username) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

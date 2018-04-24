@@ -85,13 +85,13 @@ public class BudgetServiceUserTest {
 
         assertEquals(sizeBeforeAddition + 1, sizeAfterAddition);
     }
-    
+
     @Test
     public void createExpenseWorks() {
         Boolean creationWorked = budgetService.createExpense("username", "budgetname", "ruokailu", 15.0);
         assertTrue(creationWorked);
     }
-    
+
     @Test
     public void findBudgetsExpenses() {
         int sizeBeforeAddition = budgetService.findBudgetsExpenses("lomamatka", "username").size();

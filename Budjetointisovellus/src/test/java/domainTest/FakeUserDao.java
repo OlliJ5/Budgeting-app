@@ -34,8 +34,8 @@ public class FakeUserDao implements UserDao {
 
     @Override
     public User findByUsername(String username) throws SQLException {
-        for(int i = 0; i < users.size(); i++) {
-            if(users.get(i).getUsername().equals(username)) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(username)) {
                 return users.get(i);
             }
         }
@@ -44,8 +44,8 @@ public class FakeUserDao implements UserDao {
 
     @Override
     public boolean usernameAndPasswordCorrect(String name, String password) throws SQLException {
-        for(int i = 0; i < users.size(); i++) {
-            if(users.get(i).getUsername().equals(name) && users.get(i).getPassword().equals(password)) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(name) && users.get(i).getPassword().equals(password)) {
                 return true;
             }
         }

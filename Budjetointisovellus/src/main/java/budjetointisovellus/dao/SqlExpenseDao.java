@@ -16,9 +16,9 @@ public class SqlExpenseDao implements ExpenseDao {
     public SqlExpenseDao(Database database) {
         this.database = database;
     }
-    
+
     @Override
-    public Expense create(int id, String name, Double price) throws SQLException{
+    public Expense create(int id, String name, Double price) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement statement = connection.prepareStatement("INSERT INTO Expense(budget_id, name, price) VALUES(?, ?, ?);");
         statement.setInt(1, id);
@@ -35,17 +35,17 @@ public class SqlExpenseDao implements ExpenseDao {
     @Override
     public List<Expense> getAllFromABudget(int budgetId) throws SQLException {
         ArrayList<Expense> expenses = new ArrayList<>();
-        
+
         Connection connection = database.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Expense WHERE budget_id = ?;");
         statement.setInt(1, budgetId);
         ResultSet rs = statement.executeQuery();
-        
-        while(rs.next()) {
+
+        while (rs.next()) {
             Expense expense = new Expense(rs.getString("name"), rs.getDouble("price"));
             expenses.add(expense);
         }
-        
+
         statement.close();
         rs.close();
         connection.close();

@@ -18,7 +18,7 @@ public class BudgetTest {
     public void constructorSetsCorrectName() {
         assertEquals("lomamatka", budget.getName());
     }
-    
+
     @Test
     public void constructorSetsCorrectAmount() {
         assertEquals(400.0, budget.getAmount(), 0.001);

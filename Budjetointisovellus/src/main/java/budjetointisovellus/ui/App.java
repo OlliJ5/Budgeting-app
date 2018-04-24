@@ -151,48 +151,40 @@ public class App {
         });
     }
 
-    public void loggedInScene(String budgetName) {
+    public void loggedInScene(Budget budget) {
         String time = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 
         Label loggedInAs = new Label("Tervetuloa " + this.user.getName());
         Label timeLabel = new Label(time);
         Button logOutButton = new Button("Kirjaudu ulos");
         Button createABudget = new Button("Luo uusi budjetti");
-        Label edit = new Label("Valitse muokattava budjetti: ");
 
         ToolBar toprow = new ToolBar();
         toprow.getItems().addAll(loggedInAs, timeLabel);
 
+        Label edit = new Label("Valitse muokattava budjetti: ");
         ChoiceBox cb = new ChoiceBox();
 
         ArrayList<String> budgets = budgetService.findBudgets(user)
                 .stream()
-                .map(budget -> budget.getName())
+                .map(b -> b.getName())
                 .collect(Collectors.toCollection(ArrayList::new));
 
         cb.setItems(FXCollections.observableArrayList(budgets));
 
-        if (budgetName == null) {
+        if (budget == null) {
             cb.getSelectionModel().select(0);
         } else {
-            cb.setValue(budgetName);
+            cb.setValue(budget.getName());
         }
+
+        VBox rightSide = new VBox();
+        rightSide.getChildren().addAll(edit, cb);
+        rightSide.setPadding(new Insets(10, 10, 10, 10));
 
         ToolBar sidePanel = new ToolBar();
         sidePanel.setOrientation(Orientation.VERTICAL);
-        sidePanel.getItems().addAll(logOutButton, createABudget, edit, cb);
-
-
-//        GridPane expenseCreation = new GridPane();
-//        expenseCreation.add(expenseText, 0, 0);
-//        expenseCreation.add(expenseName, 1, 0);
-//        expenseCreation.add(priceText, 0, 1);
-//        expenseCreation.add(expensePrice, 1, 1);
-//        expenseCreation.add(addButton, 1, 2);
-//        expenseCreation.add(notification, 1, 3);
-//
-//        expenseCreation.setHgap(10);
-//        expenseCreation.setVgap(10);
+        sidePanel.getItems().addAll(logOutButton, createABudget);
 
         TableView table = new TableView();
         table.setEditable(true);
@@ -212,11 +204,11 @@ public class App {
         expensePrice.setPromptText("Kulun hinta");
         expensePrice.setMinWidth(priceCol.getPrefWidth());
         Button addButton = new Button("Lisää");
-        
+
         HBox hbox = new HBox();
         hbox.getChildren().addAll(expenseName, expensePrice, addButton);
         hbox.setSpacing(10);
-        
+
         Label notification = new Label();
 
         Label tableHeader = new Label();
@@ -236,7 +228,7 @@ public class App {
 
         cb.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if (newValue != null) {
-                loggedInScene(newValue.toString());
+                loggedInScene(budgetService.getBudgetByName(newValue.toString(), user));
             }
         });
 
@@ -247,6 +239,7 @@ public class App {
         pane.setTop(toprow);
         pane.setLeft(sidePanel);
         pane.setCenter(vbox);
+        pane.setRight(rightSide);
 
         scene = new Scene(pane, 800, 600);
         primaryStage.setScene(scene);
@@ -264,14 +257,14 @@ public class App {
             if (cb.getValue() == null) {
                 notification.setText("Valitse muokattava budjetti!");
                 return;
-            } else if(!isDouble(expensePrice, expensePrice.getText())) {
+            } else if (!isDouble(expensePrice, expensePrice.getText())) {
                 notification.setText(expensePrice.getText() + " ei ole luku!");
                 return;
             }
-            
+
             if (budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
                 notification.setText("Kulu lisätty!");
-                loggedInScene(cb.getValue().toString());
+                loggedInScene(budgetService.getBudgetByName(cb.getValue().toString(), user));
             }
             expensePrice.setText("");
             expenseName.setText("");
