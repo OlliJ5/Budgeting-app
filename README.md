@@ -8,6 +8,8 @@ Projekti kurssille Ohjelmistotekniikan menetelmät
 
 [Arkkitehtuurikuvaus](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
+[Ensimmäinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases)
+
 
 ## Komentorivikomennot
 
