@@ -21,10 +21,10 @@ public class SqlUserDaoTest {
         database = new Database("jdbc:sqlite:test.db");
         userDao = new SqlUserDao(database);
         Connection connection = database.getConnection();
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE User(id integer PRIMARY KEY, username varchar(200), name varchar(200), password varchar(60));");
-        statement.execute();
-        statement.close();
-
+//        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXIST User(id integer PRIMARY KEY, username varchar(200), name varchar(200), password varchar(60));");
+//        statement.execute();
+//        statement.close();
+//
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO User(username, name, password) VALUES (?, ?, ?);");
         stmt.setString(1, "testUsername");
         stmt.setString(2, "testName");
