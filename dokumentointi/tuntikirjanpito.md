@@ -20,4 +20,7 @@
 | |0.5|Sekvenssikaavion piirtäminen
 |24.4.|0.5|Inputtien validointi ja kirjautuneen käyttäjän näkymän parantelu
 | |1.5| Testejä
-
+| |1|Käyttöliittymän parantamista
+| |1|Budjettien poisto
+| |1|Viikon 5 vaatimusten viimeistely(jar, release)
+|Yhteensä|30.5|
