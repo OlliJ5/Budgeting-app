@@ -36,3 +36,11 @@ Checkstylen tarkistukset saa komennolla
 mvn jxr:jxr checkstyle:checkstyle
 ```
 Raporttia voi tarkastella avaamalla selaimella tiedoston target/site/checkstyle.html
+
+### Jarin generointi
+Suoritettavan jarin voi generoida komennolla
+```
+mvn package
+```
+
+
