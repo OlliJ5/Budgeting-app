@@ -1,5 +1,5 @@
 # Budjetointisovellus
-Projekti kurssille Ohjelmistotekniikan menetelmät
+Projekti kurssille Ohjelmistotekniikan menetelmät. Sovelluksessa käyttäjät voivat luoda itselleen budjetteja ja seurata rahan käyttöä.
 
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/vaatimusm%C3%A4%C3%A4rittely.md)
