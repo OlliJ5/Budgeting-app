@@ -115,7 +115,6 @@ public class BudgetService {
     public boolean deleteBudget(Budget budget, User user) {
         try {
             int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budget.getName());
-            System.out.println("id: " +id);
             budgetDao.delete(budget, user.getUsername());
             expenseDao.deleteExpensesFromBudget(id);
             return true;
@@ -127,13 +126,19 @@ public class BudgetService {
     public boolean deleteExpense(Budget budget, User user, Expense expense) {
         try {
             int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budget.getName());
-            System.out.println("id: " + id);
             expenseDao.delete(id, expense);
             return true;
         }catch (Exception e) {
-            System.out.println("Virhe: " + e);
         }
         return false;
+    }
+    
+    public double totalExpenses(List<Expense> expenses) {
+        double total = 0;
+        for(int i = 0; i < expenses.size(); i++) {
+            total += expenses.get(i).getPrice();
+        }
+        return total;
     }
 
 }

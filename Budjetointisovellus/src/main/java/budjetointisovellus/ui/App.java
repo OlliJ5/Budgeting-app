@@ -34,6 +34,7 @@ public class App {
     private Stage primaryStage;
     private User user;
     private Scene scene;
+    private Budget budget;
 
     public App(Stage primaryStage) throws ClassNotFoundException {
         this.primaryStage = primaryStage;
@@ -87,7 +88,7 @@ public class App {
             try {
                 if (budgetService.login(username, password)) {
                     this.user = budgetService.getUser(username);
-                    loggedInScene(null);
+                    loggedInScene();
                 } else {
                     messageLogin.setText("Virheellinen käyttäjätunnus tai salasana");
                 }
@@ -153,7 +154,7 @@ public class App {
         });
     }
 
-    public void loggedInScene(Budget budget) {
+    public void loggedInScene() {
         String time = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 
         Label loggedInAs = new Label("Tervetuloa " + this.user.getName());
@@ -177,6 +178,7 @@ public class App {
 
         if (budget == null) {
             cb.getSelectionModel().select(0);
+            budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
         } else {
             cb.setValue(budget.getName());
         }
@@ -235,21 +237,38 @@ public class App {
         tableHeader.setSpacing(10);
         tableHeader.setPadding(new Insets(10, 10, 10, 10));
         
-        Button deleteExpense = new Button("Poista kulu");
-
-        VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10, 5, 15, 15));
-        vbox.setSpacing(10);
-        vbox.getChildren().addAll(tableHeader, table, hbox, deleteExpense, notification);
-
         List<Expense> expenses = new ArrayList<>();
         if (cb.getValue() != null) {
             expenses = budgetService.findBudgetsExpenses(cb.getValue().toString(), user.getUsername());
         }
+        
+        double sumOfExpenses = budgetService.totalExpenses(expenses);
+        
+        Button deleteExpense = new Button("Poista kulu");
+        Label expensesInTotal = new Label("Kulut yhteensä: " + sumOfExpenses);
+        Label leftOfBudget = new Label();
+        
+        if(budget != null) {
+            if (sumOfExpenses > budget.getAmount()) {
+                double howMuchOver = sumOfExpenses - budget.getAmount();
+                leftOfBudget.setText("Olet ylittänyt budjettisi " + howMuchOver + " eurolla!");
+            } else {
+                double budgetLeft = budget.getAmount() - sumOfExpenses;
+                leftOfBudget.setText("Budjettia jäljellä " + budgetLeft + " euroa!");
+            }
+        }
+        
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10, 5, 15, 15));
+        vbox.setSpacing(10);
+        vbox.getChildren().addAll(tableHeader, table, expensesInTotal, leftOfBudget, hbox, deleteExpense, notification);
+
 
         cb.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if (newValue != null) {
-                loggedInScene(budgetService.getBudgetByName(newValue.toString(), user));
+                this.budget = budgetService.getBudgetByName(newValue.toString(), user);
+                loggedInScene();
             }
         });
 
@@ -285,7 +304,8 @@ public class App {
 
             if (budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
                 notification.setText("Kulu lisätty!");
-                loggedInScene(budgetService.getBudgetByName(cb.getValue().toString(), user));
+                budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
+                loggedInScene();
             }
             expensePrice.setText("");
             expenseName.setText("");
@@ -295,13 +315,15 @@ public class App {
             budgetService.deleteBudget(budget, user);
             budgets.remove(cb.getValue().toString());
             cb.getSelectionModel().select(0);
-            loggedInScene(budgetService.getBudgetByName(cb.getValue().toString(), user));
+            this.budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
+            loggedInScene();
         });
         
         deleteExpense.setOnAction((event) -> {
             Expense expense = table.getSelectionModel().getSelectedItem();
             budgetService.deleteExpense(budgetService.getBudgetByName(cb.getValue().toString(), user), user, expense);
             table.getItems().remove(expense);
+            loggedInScene();
         });
     }
 
@@ -339,7 +361,8 @@ public class App {
             Budget newBudget = new Budget(budget.getText(), Double.parseDouble(amount.getText()));
             try {
                 if (budgetService.createBudget(newBudget, user)) {
-                    loggedInScene(null);
+                    this.budget = newBudget;
+                    loggedInScene();
                 } else {
                     notification.setText("Saman niminen budjetti on jo olemassa");
                 }
@@ -350,7 +373,7 @@ public class App {
         });
 
         changeScene.setOnAction((event) -> {
-            loggedInScene(null);
+            loggedInScene();
         });
     }
 
