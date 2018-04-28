@@ -9,4 +9,6 @@ public interface ExpenseDao {
     Expense create(int id, String name, Double price) throws SQLException;
 
     List<Expense> getAllFromABudget(int budgetId) throws SQLException;
+    
+    void deleteExpensesFromBudget(int budgetId) throws SQLException;
 }

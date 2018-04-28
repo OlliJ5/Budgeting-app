@@ -51,4 +51,14 @@ public class SqlExpenseDao implements ExpenseDao {
         connection.close();
         return expenses;
     }
+
+    @Override
+    public void deleteExpensesFromBudget(int budgetId) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Expense WHERE budget_id = ?");
+        statement.setInt(1, budgetId);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
 }
