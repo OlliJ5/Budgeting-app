@@ -11,4 +11,6 @@ public interface ExpenseDao {
     List<Expense> getAllFromABudget(int budgetId) throws SQLException;
     
     void deleteExpensesFromBudget(int budgetId) throws SQLException;
+    
+    void delete(int budgetId, Expense expense) throws SQLException;
 }

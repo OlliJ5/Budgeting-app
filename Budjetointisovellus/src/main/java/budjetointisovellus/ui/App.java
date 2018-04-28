@@ -196,7 +196,7 @@ public class App {
         sidePanel.getItems().add(leftSide);
         sidePanel.setPadding(new Insets(10, 10, 10, 10));
 
-        TableView table = new TableView();
+        TableView<Expense> table = new TableView();
         table.setEditable(true);
 
         TableColumn<Expense, String> nameCol = new TableColumn<>("Kulu");
@@ -234,11 +234,13 @@ public class App {
         }
         tableHeader.setSpacing(10);
         tableHeader.setPadding(new Insets(10, 10, 10, 10));
+        
+        Button deleteExpense = new Button("Poista kulu");
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10, 5, 15, 15));
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(tableHeader, table, hbox, notification);
+        vbox.getChildren().addAll(tableHeader, table, hbox, deleteExpense, notification);
 
         List<Expense> expenses = new ArrayList<>();
         if (cb.getValue() != null) {
@@ -294,6 +296,12 @@ public class App {
             budgets.remove(cb.getValue().toString());
             cb.getSelectionModel().select(0);
             loggedInScene(budgetService.getBudgetByName(cb.getValue().toString(), user));
+        });
+        
+        deleteExpense.setOnAction((event) -> {
+            Expense expense = table.getSelectionModel().getSelectedItem();
+            budgetService.deleteExpense(budgetService.getBudgetByName(cb.getValue().toString(), user), user, expense);
+            table.getItems().remove(expense);
         });
     }
 

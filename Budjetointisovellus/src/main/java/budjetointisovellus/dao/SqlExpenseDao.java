@@ -55,8 +55,20 @@ public class SqlExpenseDao implements ExpenseDao {
     @Override
     public void deleteExpensesFromBudget(int budgetId) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM Expense WHERE budget_id = ?");
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Expense WHERE budget_id = ?;");
         statement.setInt(1, budgetId);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    @Override
+    public void delete(int budgetId, Expense expense) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Expense WHERE budget_id = (?) AND name = (?) AND price = (?);");
+        statement.setInt(1, budgetId);
+        statement.setString(2, expense.getName());
+        statement.setDouble(3, expense.getPrice());
         statement.executeUpdate();
         statement.close();
         connection.close();

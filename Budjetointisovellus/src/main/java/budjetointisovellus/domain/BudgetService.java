@@ -115,11 +115,23 @@ public class BudgetService {
     public boolean deleteBudget(Budget budget, User user) {
         try {
             int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budget.getName());
+            System.out.println("id: " +id);
             budgetDao.delete(budget, user.getUsername());
-            System.out.println("id: "  + id);
             expenseDao.deleteExpensesFromBudget(id);
             return true;
         } catch (Exception e) {
+        }
+        return false;
+    }
+    
+    public boolean deleteExpense(Budget budget, User user, Expense expense) {
+        try {
+            int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budget.getName());
+            System.out.println("id: " + id);
+            expenseDao.delete(id, expense);
+            return true;
+        }catch (Exception e) {
+            System.out.println("Virhe: " + e);
         }
         return false;
     }
