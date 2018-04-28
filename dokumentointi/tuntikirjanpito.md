@@ -23,4 +23,5 @@
 | |1|Käyttöliittymän parantamista
 | |1|Budjettien poisto
 | |1|Viikon 5 vaatimusten viimeistely(jar, release)
-|Yhteensä|30.5|
+|28.4.|3|Kulujen poisto ja budjetin poiston parantaminen + tieto yhteiskuluista sekä paljonko budjettia jäljellä
+|Yhteensä|33.5|
