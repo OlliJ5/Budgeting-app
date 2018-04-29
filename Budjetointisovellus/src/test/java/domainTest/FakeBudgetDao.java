@@ -60,7 +60,7 @@ public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public void delete(Budget budget, String username) throws SQLException {
-        //this.budgets.add(new Budget("uusi", 0))
+        
     }
 
 }

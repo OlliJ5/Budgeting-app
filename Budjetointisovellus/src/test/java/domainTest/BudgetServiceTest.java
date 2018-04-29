@@ -4,6 +4,8 @@ import budjetointisovellus.domain.Budget;
 import budjetointisovellus.domain.BudgetService;
 import budjetointisovellus.domain.Expense;
 import budjetointisovellus.domain.User;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,6 +16,7 @@ public class BudgetServiceTest {
     FakeBudgetDao budgetDao;
     FakeExpenseDao expenseDao;
     BudgetService budgetService;
+    User user;
 
     @Before
     public void setUp() {
@@ -21,6 +24,7 @@ public class BudgetServiceTest {
         this.budgetDao = new FakeBudgetDao();
         this.expenseDao = new FakeExpenseDao();
         this.budgetService = new BudgetService(expenseDao, userDao, budgetDao);
+        this.user = new User("username", "name", "password");
     }
 
     @Test
@@ -56,8 +60,7 @@ public class BudgetServiceTest {
     @Test
     public void getUserWorks() {
         User returnedUser = budgetService.getUser("username");
-        User user = new User("username", "name", "password");
-        assertEquals(user, returnedUser);
+        assertEquals(this.user, returnedUser);
     }
 
     @Test
@@ -68,21 +71,21 @@ public class BudgetServiceTest {
 
     @Test
     public void createBudgetWorks() {
-        Boolean creationWorked = budgetService.createBudget(new Budget("tammikuu", 100), new User("username", "name", "pword"));
+        Boolean creationWorked = budgetService.createBudget(new Budget("tammikuu", 100), this.user);
         assertTrue(creationWorked);
     }
 
     @Test
     public void cannotCreateBudgetWithSameName() {
-        Boolean creationWorked = budgetService.createBudget(new Budget("lomamatka", 500), new User("username", "name", "pword"));
+        Boolean creationWorked = budgetService.createBudget(new Budget("lomamatka", 500), this.user);
         assertFalse(creationWorked);
     }
 
     @Test
     public void findBudgetsWorks() {
-        int sizeBeforeAddition = budgetService.findBudgets(new User("username", "name", "pword")).size();
-        budgetService.createBudget(new Budget("helmikuu", 100), new User("username", "name", "pword"));
-        int sizeAfterAddition = budgetService.findBudgets(new User("username", "name", "pword")).size();
+        int sizeBeforeAddition = budgetService.findBudgets(this.user).size();
+        budgetService.createBudget(new Budget("helmikuu", 100), this.user);
+        int sizeAfterAddition = budgetService.findBudgets(this.user).size();
 
         assertEquals(sizeBeforeAddition + 1, sizeAfterAddition);
     }
@@ -100,16 +103,39 @@ public class BudgetServiceTest {
         int sizeAfterAddition = budgetService.findBudgetsExpenses("lomamatka", "username").size();
         assertEquals(sizeBeforeAddition + 1, sizeAfterAddition);
     }
-    
+
     @Test
     public void getBudgetByNameReturnsBudget() {
         Budget budget = new Budget("lomamatka", 500);
-        assertEquals(budget, budgetService.getBudgetByName("lomamatka", new User("username", "name", "pword")));
+        assertEquals(budget, budgetService.getBudgetByName("lomamatka", this.user));
+    }
+
+    @Test
+    public void budgetDeletionWorks() {
+        budgetService.createBudget(new Budget("uusi", 400), this.user);
+        int sizeBeforeRemoval = budgetService.findBudgets(this.user).size();
+        budgetService.deleteBudget(new Budget("uusi", 400), this.user);
+        int sizeAfterRemoval = budgetService.findBudgets(this.user).size();
+        assertEquals(sizeAfterRemoval, sizeBeforeRemoval);
+
     }
     
     @Test
-    public void budgetDeletionWorks() {
-        
+    public void expenseDeletionWorks() {
+        budgetService.createExpense(this.user.getUsername(), "lomamatka", "ruokailu", 20.0);
+        int sizeBeforeRemoval = budgetService.findBudgetsExpenses("lomamatka", this.user.getUsername()).size();
+        budgetService.deleteExpense(new Budget("lomamata", 500), user, new Expense("ruokailu", 20.0));
+        int sizeAfterRemoval = budgetService.findBudgetsExpenses("lomamatka", this.user.getUsername()).size();
+        assertEquals(sizeBeforeRemoval, sizeAfterRemoval + 1);
     }
     
+    @Test
+    public void totalExpenses() {
+        List<Expense> expenses = new ArrayList<>();
+        expenses.add(new Expense("ruoka", 15));
+        expenses.add(new Expense("olut", 400));
+        
+        assertEquals(415, budgetService.totalExpenses(expenses), 0.01);
+    }
+
 }

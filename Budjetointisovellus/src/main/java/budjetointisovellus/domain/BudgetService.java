@@ -211,7 +211,7 @@ public class BudgetService {
      * Kulujen hinnan laskeminen
      * 
      * @param expenses Lista kuluja
-     * @return kulujen yhteisen hinnan
+     * @return kulujen yhteinen hinnan
      */
     public double totalExpenses(List<Expense> expenses) {
         double total = 0;

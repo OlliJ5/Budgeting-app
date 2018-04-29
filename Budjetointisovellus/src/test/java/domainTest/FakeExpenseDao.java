@@ -30,12 +30,16 @@ public class FakeExpenseDao implements ExpenseDao {
 
     @Override
     public void deleteExpensesFromBudget(int budgetId) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void delete(int budgetId, Expense expense) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(int i = 0; i < expenses.size(); i++) {
+            if(expenses.get(i).getName().equals(expense.getName())) {
+                expenses.remove(i);
+            }
+        }
     }
 
 }
