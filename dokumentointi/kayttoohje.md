@@ -25,7 +25,7 @@ käyttäjätunnus (täytyy olla uniikki), nimi sekä salasana ja painamalla 'Luo
 Uuden käyttäjän onnistuneesta luomisesta ilmoitetaan käyttäjälle.
 
 ## Budjettien luominen
-Käyttäjä voi luoda uuden budjetin painamalla 'Luo uusi budjetti', jolloin tullaan uuteen näkymään. Kirjoittamalla syötekenttiin
+Käyttäjä voi luoda uuden budjetin kirjautumisen jälkeen painamalla 'Luo uusi budjetti' päänäkymästä, jolloin tullaan uuteen näkymään. Kirjoittamalla syötekenttiin
 budjetin nimen, jonka täytyy olla uniikki (eri käyttäjät voivat kuitenkin luoda samannimisen budjetin) sekä budjetin määrän 
 ja painamalla 'Luo uusi' saadaan uusi budjetti luotua.
 
