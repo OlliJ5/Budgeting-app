@@ -9,6 +9,15 @@ Ohjelman pakkausrakenne:
 
 Ui-pakkaus sisältää JavaFX:llä tehdyn käyttöliittymän, domain vastaa sovelluslogiikasta ja dao vastaa tietojen tallentamisesta tietokantaan ja sieltä tiedon hakemisesta
 
+## Käyttöliittymä
+Käyttöliittymä sisältää neljä erillistä näkymää:
+* Sisäänkirjautuminen
+* Uuden käyttäjän luonti
+* Uuden budjetin luonti
+* Päänäkymä, jossa voi tarkastella budjetteja ja lisätä kuluja
+
+Jokainen on toteutettu omana Scene-oliona, joita sijoitetaan yksi kerrallaan sovelluksen Stage-olioon. Käyttöliittymä on rakennettu JavaFX:llä luokassa budjetointisovellus.ui.App. Käyttöliittymä kutsuu BudgetService-olion metodeja sopivasti käyttäjän tekojen perusteella. 
+
 ## Sovelluslogiikka
 
 Sovelluksessa on luokat User, Budget ja Expense, jotka luovat sovelluksen loogisen datamallin. User kuvaa käyttäjää, Budget käyttäjiin liittyviä budjetteja ja Expense bujetteihin kuuluvia kuluja.
