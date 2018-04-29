@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BudgetServiceUserTest {
+public class BudgetServiceTest {
 
     FakeUserDao userDao;
     FakeBudgetDao budgetDao;
@@ -75,6 +75,7 @@ public class BudgetServiceUserTest {
     @Test
     public void cannotCreateBudgetWithSameName() {
         Boolean creationWorked = budgetService.createBudget(new Budget("lomamatka", 500), new User("username", "name", "pword"));
+        assertFalse(creationWorked);
     }
 
     @Test
@@ -99,5 +100,16 @@ public class BudgetServiceUserTest {
         int sizeAfterAddition = budgetService.findBudgetsExpenses("lomamatka", "username").size();
         assertEquals(sizeBeforeAddition + 1, sizeAfterAddition);
     }
-
+    
+    @Test
+    public void getBudgetByNameReturnsBudget() {
+        Budget budget = new Budget("lomamatka", 500);
+        assertEquals(budget, budgetService.getBudgetByName("lomamatka", new User("username", "name", "pword")));
+    }
+    
+    @Test
+    public void budgetDeletionWorks() {
+        
+    }
+    
 }

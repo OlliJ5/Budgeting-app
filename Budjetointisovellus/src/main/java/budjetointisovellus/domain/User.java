@@ -2,12 +2,22 @@ package budjetointisovellus.domain;
 
 import java.util.Objects;
 
+/**
+ *
+ * Luokka kuvaa sovelluksen käyttäjää
+ */
 public class User {
 
     private String username;
     private String name;
     private String password;
 
+    /**
+     *
+     * @param username käyttäjän käyttäjätunnus
+     * @param name käyttäjän nimi
+     * @param password käyttäjän salasana
+     */
     public User(String username, String name, String password) {
         this.username = username;
         this.name = name;

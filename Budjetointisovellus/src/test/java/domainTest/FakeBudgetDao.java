@@ -49,12 +49,18 @@ public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public Budget findOne(String budgetName, String username) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(int i = 0; i < budgets.size(); i++) {
+            if(budgets.get(i).getName().equals(budgetName)) {
+                Budget budget = new Budget(budgets.get(i).getName(), budgets.get(i).getAmount());
+                return budget;
+            }
+        }
+        return null;
     }
 
     @Override
     public void delete(Budget budget, String username) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //this.budgets.add(new Budget("uusi", 0))
     }
 
 }

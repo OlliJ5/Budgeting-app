@@ -40,9 +40,9 @@ public class App {
         this.primaryStage = primaryStage;
 
         Database database = new Database("jdbc:sqlite:budget.db");
-        SqlUserDao userDao = new SqlUserDao(database);
-        SqlExpenseDao expenseDao = new SqlExpenseDao(database);
-        SqlBudgetDao budgetDao = new SqlBudgetDao(database);
+        UserDao userDao = new SqlUserDao(database);
+        ExpenseDao expenseDao = new SqlExpenseDao(database);
+        BudgetDao budgetDao = new SqlBudgetDao(database);
         budgetService = new BudgetService(expenseDao, userDao, budgetDao);
     }
 
@@ -178,7 +178,9 @@ public class App {
 
         if (budget == null) {
             cb.getSelectionModel().select(0);
-            budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
+            if(budgets.size() > 0) {
+                budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
+            }
         } else {
             cb.setValue(budget.getName());
         }
