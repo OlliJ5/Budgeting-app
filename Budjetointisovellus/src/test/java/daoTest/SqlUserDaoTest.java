@@ -32,7 +32,7 @@ public class SqlUserDaoTest {
     }
 
     @Test
-    public void usernameExists() throws Exception {
+    public void findsUserByUsername() throws Exception {
         User user = new User("testUsername", "testName", "testPassword");
 
         assertEquals(user, userDao.findByUsername("testUsername"));
@@ -44,6 +44,16 @@ public class SqlUserDaoTest {
         assertEquals(user, userDao.create(user));
     }
 
+    @Test
+    public void findsExistingUsername() throws Exception {
+        assertTrue(userDao.usernameExists("testUsername"));
+    }
+
+    @Test
+    public void returnsFalseWhenUsernameDoesNotExist() throws Exception {
+        assertFalse(userDao.usernameExists("wrong"));
+    }
+
     @After
     public void tearDown() throws Exception {
         Connection connection = database.getConnection();
@@ -52,4 +62,5 @@ public class SqlUserDaoTest {
         statement.close();
         connection.close();
     }
+
 }

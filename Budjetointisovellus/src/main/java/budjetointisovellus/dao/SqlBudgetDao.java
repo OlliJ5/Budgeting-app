@@ -94,7 +94,7 @@ public class SqlBudgetDao implements BudgetDao {
 
         ResultSet rs = statement.executeQuery();
 
-        while (!rs.next()) {
+        if (!rs.next()) {
             return null;
         }
 
