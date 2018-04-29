@@ -42,6 +42,6 @@ Budjetin poistaminen onnistuu helposti valitsemalla oikealta muokattava budjetti
 ja sitten painamalla 'Poista budjetti
 
 ## Kulujen poistaminen
-Kulujen poistaminen onnistuu valitsemalla taulukosta rivin ja sen jälkeen painamalla alhaalla olevaa nappia 'Poista kulu'.
+Kulujen poistaminen onnistuu valitsemalla taulukosta rivin ja sen jälkeen painamalla alhaalla olevaa nappia 'Poista kulu''.
 
 <img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/poistaKulu.png" width="500">
