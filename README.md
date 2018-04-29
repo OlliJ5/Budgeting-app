@@ -2,6 +2,8 @@
 Projekti kurssille Ohjelmistotekniikan menetelmät. Sovelluksessa käyttäjät voivat luoda itselleen budjetteja ja seurata rahan käyttöä.
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
+
 [Vaatimusmäärittely](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/vaatimusm%C3%A4%C3%A4rittely.md)
 
 [Tuntikirjanpito](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
