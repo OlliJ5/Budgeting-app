@@ -47,4 +47,13 @@ Suoritettavan jarin voi generoida komennolla
 mvn package
 ```
 
+### JavaDoc
+JavaDoc generoidaan komennolla
+```
+mvn javadoc:javadoc
+```
+Sitä voi tarkastella avaamalla selaimella tiedoston target/site/apidocs
+
+
+
 
