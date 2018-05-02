@@ -47,4 +47,12 @@ Suoritettavan jarin voi generoida komennolla
 mvn package
 ```
 
+### JavaDoc
+JavaDoc generoidaan komennolla
+```
+mvn javadoc:javadoc
+```
+
+
+
 
