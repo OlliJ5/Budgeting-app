@@ -12,6 +12,8 @@ Projekti kurssille Ohjelmistotekniikan menetelmät. Sovelluksessa käyttäjät v
 
 [Ensimmäinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases)
 
+[Toinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases/tag/Viikko6)
+
 
 ## Komentorivikomennot
 
