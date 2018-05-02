@@ -2,10 +2,18 @@ package budjetointisovellus.dao;
 
 import java.sql.*;
 
+/**
+ * Luokka esittää tietokantaa
+ * @author ogrousu
+ */
 public class Database {
 
     private String databaseAddress;
 
+    /**
+     * Konstruktori luo tietokannan ja taulut, jos ne eivät ole jo olemassa
+     * @param databaseAddress tietokannan polku
+     */
     public Database(String databaseAddress) throws ClassNotFoundException {
         this.databaseAddress = databaseAddress;
         
@@ -22,6 +30,10 @@ public class Database {
 
     }
 
+    /**
+     * Yhteyden otto tietokantaan
+     * @return Connection olio
+     */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(databaseAddress);
     }

@@ -4,10 +4,18 @@ import budjetointisovellus.domain.User;
 import java.sql.*;
 import org.mindrot.jbcrypt.*;
 
+/**
+ *
+ * @author ogrousu
+ */
 public class SqlUserDao implements UserDao {
 
     private Database database;
 
+    /**
+     *
+     * @param database Database-olio, jota halutaan käyttää tiedon talletukseen
+     */
     public SqlUserDao(Database database) {
         this.database = database;
     }

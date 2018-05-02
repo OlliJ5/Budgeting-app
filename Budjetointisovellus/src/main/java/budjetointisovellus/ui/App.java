@@ -28,6 +28,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author ogrousu
+ */
 public class App {
 
     private BudgetService budgetService;
@@ -36,6 +40,10 @@ public class App {
     private Scene scene;
     private Budget budget;
 
+    /**
+     *
+     * @param primaryStage Stage-olio, jota halutaan käyttää
+     */
     public App(Stage primaryStage) throws ClassNotFoundException {
         this.primaryStage = primaryStage;
 
@@ -46,10 +54,16 @@ public class App {
         budgetService = new BudgetService(expenseDao, userDao, budgetDao);
     }
 
+    /**
+     * Kaynnistaa sovelluksen
+     */
     public void start() {
         loginScene();
     }
 
+    /**
+     * Luo sisäänkirjautumisnäkymän ja asettaa sen Stage-olioon
+     */
     public void loginScene() {
         Label usernameTextLogin = new Label("Käyttäjätunnus: ");
         TextField usernameFieldLogin = new TextField();
@@ -98,6 +112,9 @@ public class App {
         });
     }
 
+    /**
+     * Luo näkymän, jossa uusi käyttäjä luodaan ja asettaa sen Stageen
+     */
     public void userCreationScene() {
         Label nameText = new Label("Nimi: ");
         Label usernameText = new Label("Käyttäjätunnus: ");
@@ -154,6 +171,9 @@ public class App {
         });
     }
 
+    /**
+     * Luo näkymän sisäänkirjautuneelle käyttäjälle ja asettaa sen Stageen
+     */
     public void loggedInScene() {
         String time = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 
@@ -299,7 +319,7 @@ public class App {
             if (cb.getValue() == null) {
                 notification.setText("Valitse muokattava budjetti!");
                 return;
-            } else if (!isDouble(expensePrice, expensePrice.getText())) {
+            } else if (!budgetService.isDouble(expensePrice, expensePrice.getText())) {
                 notification.setText(expensePrice.getText() + " ei ole luku!");
                 return;
             }
@@ -329,6 +349,9 @@ public class App {
         });
     }
 
+    /**
+     * Luo näkymän budjetin luomiselle ja asettaa sen Stageen
+     */
     public void createABudgetScene() {
         Label budgetName = new Label("Budjetin nimi: ");
         TextField budget = new TextField();
@@ -355,7 +378,7 @@ public class App {
         primaryStage.setScene(scene);
 
         submit.setOnAction((event) -> {
-            if (!isDouble(amount, amount.getText())) {
+            if (!budgetService.isDouble(amount, amount.getText())) {
                 notification.setText(amount.getText() + " ei ole luku");
                 return;
             }
@@ -379,13 +402,6 @@ public class App {
         });
     }
 
-    public boolean isDouble(TextField input, String message) {
-        try {
-            Double number = Double.parseDouble(input.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
+
 
 }

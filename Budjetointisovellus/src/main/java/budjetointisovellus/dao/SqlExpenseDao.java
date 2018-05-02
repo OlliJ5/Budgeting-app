@@ -9,10 +9,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author ogrousu
+ */
 public class SqlExpenseDao implements ExpenseDao {
 
     private Database database;
 
+    /**
+     *
+     * @param database Database-olio, jota halutaan käyttää tiedon talletukseen
+     */
     public SqlExpenseDao(Database database) {
         this.database = database;
     }

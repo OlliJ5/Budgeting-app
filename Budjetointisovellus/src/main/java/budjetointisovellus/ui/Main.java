@@ -3,6 +3,10 @@ package budjetointisovellus.ui;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author ogrousu
+ */
 public class Main extends Application {
 
     @Override

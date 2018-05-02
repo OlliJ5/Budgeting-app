@@ -5,6 +5,7 @@ import budjetointisovellus.dao.ExpenseDao;
 import budjetointisovellus.dao.UserDao;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.TextField;
 import org.mindrot.jbcrypt.*;
 
 /**
@@ -25,10 +26,11 @@ public class BudgetService {
 
     /**
      * Uuden käyttäjän luominen
-     * 
+     *
      * @param username luotavan käyttäjän käyttäjätunnus
      * @param name luotavan käyttäjän nimi
      * @param password luotavan käyttäjän salasana
+     * @return true
      */
     public boolean createUser(String username, String name, String password) {
 
@@ -52,10 +54,11 @@ public class BudgetService {
 
     /**
      * Sisäänkirjautuminen
-     * 
+     *
      * @param username käyttäjätunnus
      * @param password salasana
-     * @return true, jos käyttäjätunnus on olemassa. False, jos käyttäjätunnusta ei ole
+     * @return true, jos käyttäjätunnus on olemassa. False, jos käyttäjätunnusta
+     * ei ole
      */
     public boolean login(String username, String password) {
         try {
@@ -69,7 +72,7 @@ public class BudgetService {
 
     /**
      * Hakee käyttäjän käyttäjätunnuksen avulla
-     * 
+     *
      * @param username käyttäjätunnus
      * @return User-olio, joka vastaa käyttäjätunnusta
      */
@@ -83,10 +86,11 @@ public class BudgetService {
 
     /**
      * Budjetin luonti
-     * 
+     *
      * @param budget Luotava budjetti oliona
      * @param user Käyttäjä, jolle budjetti luodaan
-     * @return true, jos budjetti saadaan luotua. False, jos budjetin luonti ei onnistu
+     * @return true, jos budjetti saadaan luotua. False, jos budjetin luonti ei
+     * onnistu
      */
     public boolean createBudget(Budget budget, User user) {
         try {
@@ -107,7 +111,7 @@ public class BudgetService {
 
     /**
      * Uuden kulun luominen
-     * 
+     *
      * @param username Käyttäjätunnus, jonka budjettiin kulu luodaan
      * @param budgetName Budjetti, johon kulu luodaan
      * @param expenseName Kulun nimi
@@ -127,7 +131,7 @@ public class BudgetService {
 
     /**
      * Etsii budjettin kuuluvat kulut
-     * 
+     *
      * @param budgetName Budjetin nimi
      * @param username Käyttäjätunnus, jonka budjetin kuluja etsitään
      * @return Palauttaa listan kuluja eli Expense-olioita.
@@ -144,7 +148,7 @@ public class BudgetService {
 
     /**
      * Etsii käyttäjän budjetit
-     * 
+     *
      * @param user käyttäjä
      * @return Lista budjetteja eli Budget-olioita.
      */
@@ -159,6 +163,7 @@ public class BudgetService {
 
     /**
      * Etsii budjetin budjetin nimen perusteella
+     *
      * @param budgetName budjetin nimi
      * @param user käyttäjä, jonka budjettia etsitään
      * @return Budget-olio, joka vastaa budjetin nimeä ja käyttäjää
@@ -173,8 +178,8 @@ public class BudgetService {
 
     /**
      * Budjetin poistaminen
-     * 
-     * @param budget poistettava budjetti   
+     *
+     * @param budget poistettava budjetti
      * @param user käyttäjä, jonka budjetti poistetaan
      * @return true, jos poistaminen onnistuu, muuten false
      */
@@ -191,7 +196,7 @@ public class BudgetService {
 
     /**
      * Kulun poistaminen
-     * 
+     *
      * @param budget Budjetti, jonka kulu halutaan poistaaa
      * @param user Käyttäjä, jonka budjetti on
      * @param expense Poistettava kulu
@@ -209,7 +214,7 @@ public class BudgetService {
 
     /**
      * Kulujen hinnan laskeminen
-     * 
+     *
      * @param expenses Lista kuluja
      * @return kulujen yhteinen hinnan
      */
@@ -219,6 +224,21 @@ public class BudgetService {
             total += expenses.get(i).getPrice();
         }
         return total;
+    }
+
+    /**
+     * Tarkistaa onko luku liukuluku
+     * @param input Tekstikenttä, jonka sisältä halutaan tarkistaa
+     * @param message Tekstikentän sisältö
+     * @return True, jos luku on liukuluku, muuten false
+     */
+    public boolean isDouble(TextField input, String message) {
+        try {
+            Double number = Double.parseDouble(input.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

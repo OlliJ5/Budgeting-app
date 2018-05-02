@@ -6,10 +6,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author ogrousu
+ */
 public class SqlBudgetDao implements BudgetDao {
 
     private Database database;
 
+    /**
+     * 
+     * @param database Database-olio, jota halutaan käyttää tiedon talletukseen
+     */
     public SqlBudgetDao(Database database) {
         this.database = database;
     }
