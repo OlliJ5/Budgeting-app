@@ -153,21 +153,24 @@ public class App {
             String newUsername = usernameField.getText();
             String newName = nameField.getText();
             String newPassword = passwordField.getText();
-            usernameField.setText("");
 
-            try {
-                if (budgetService.createUser(newUsername, newName, newPassword)) {
-                    nameField.setText("");
-                    passwordField.setText("");
-                    messageCreate.setText("Käyttäjä " + newUsername + " luotu");
-                } else {
-                    messageCreate.setText("Käyttäjätunnus " + newUsername + " on jo olemassa");
+            if (newUsername.length() < 3 || newName.length() < 2 || newPassword.length() < 3) {
+                messageCreate.setText("Käyttäjätunnus tai salasana liian lyhyt");
+            } else {
+                try {
+                    if (budgetService.createUser(newUsername, newName, newPassword)) {
+                        messageCreate.setText("Käyttäjä " + newUsername + " luotu");
+                    } else {
+                        messageCreate.setText("Käyttäjätunnus " + newUsername + " on jo olemassa");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-
-            } catch (Exception e) {
-                System.out.println(e);
             }
-
+            usernameField.setText("");
+            nameField.setText("");
+            passwordField.setText("");
         });
     }
 
@@ -198,7 +201,7 @@ public class App {
 
         if (budget == null) {
             cb.getSelectionModel().select(0);
-            if(budgets.size() > 0) {
+            if (budgets.size() > 0) {
                 budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
             }
         } else {
@@ -258,19 +261,19 @@ public class App {
         }
         tableHeader.setSpacing(10);
         tableHeader.setPadding(new Insets(10, 10, 10, 10));
-        
+
         List<Expense> expenses = new ArrayList<>();
         if (cb.getValue() != null) {
             expenses = budgetService.findBudgetsExpenses(cb.getValue().toString(), user.getUsername());
         }
-        
+
         double sumOfExpenses = budgetService.totalExpenses(expenses);
-        
+
         Button deleteExpense = new Button("Poista kulu");
         Label expensesInTotal = new Label("Kulut yhteensä: " + sumOfExpenses);
         Label leftOfBudget = new Label();
-        
-        if(budget != null) {
+
+        if (budget != null) {
             if (sumOfExpenses > budget.getAmount()) {
                 double howMuchOver = sumOfExpenses - budget.getAmount();
                 leftOfBudget.setText("Olet ylittänyt budjettisi " + howMuchOver + " eurolla!");
@@ -279,13 +282,11 @@ public class App {
                 leftOfBudget.setText("Budjettia jäljellä " + budgetLeft + " euroa!");
             }
         }
-        
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10, 5, 15, 15));
         vbox.setSpacing(10);
         vbox.getChildren().addAll(tableHeader, table, expensesInTotal, leftOfBudget, hbox, deleteExpense, notification);
-
 
         cb.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if (newValue != null) {
@@ -340,7 +341,7 @@ public class App {
             this.budget = budgetService.getBudgetByName(cb.getValue().toString(), user);
             loggedInScene();
         });
-        
+
         deleteExpense.setOnAction((event) -> {
             Expense expense = table.getSelectionModel().getSelectedItem();
             budgetService.deleteExpense(budgetService.getBudgetByName(cb.getValue().toString(), user), user, expense);
@@ -401,7 +402,5 @@ public class App {
             loggedInScene();
         });
     }
-
-
 
 }
