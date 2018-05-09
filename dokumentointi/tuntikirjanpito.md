@@ -24,4 +24,5 @@
 | |1|Budjettien poisto
 | |1|Viikon 5 vaatimusten viimeistely(jar, release)
 |28.4.|3|Kulujen poisto ja budjetin poiston parantaminen + tieto yhteiskuluista sekä paljonko budjettia jäljellä
-|Yhteensä|33.5|
+|2.5.|2|Dokumentaatiota
+|Yhteensä|35.5|
