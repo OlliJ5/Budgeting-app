@@ -40,4 +40,7 @@ public interface UserDao {
      * @return True, jos käyttäjätunnus ja salasana liittyvät yhteen, muuten false
      */
     boolean usernameAndPasswordCorrect(String name, String password) throws SQLException;
+    
+    void delete(User user) throws SQLException;
+    
 }

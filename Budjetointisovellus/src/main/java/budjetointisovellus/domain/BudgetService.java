@@ -3,6 +3,7 @@ package budjetointisovellus.domain;
 import budjetointisovellus.dao.BudgetDao;
 import budjetointisovellus.dao.ExpenseDao;
 import budjetointisovellus.dao.UserDao;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.TextField;
@@ -226,8 +227,18 @@ public class BudgetService {
         return total;
     }
 
+    public boolean deleteUser(User user) {
+        try {
+            userDao.delete(user);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Tarkistaa onko luku liukuluku
+     *
      * @param input Tekstikenttä, jonka sisältä halutaan tarkistaa
      * @param message Tekstikentän sisältö
      * @return True, jos luku on liukuluku, muuten false

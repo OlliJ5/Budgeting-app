@@ -182,7 +182,9 @@ public class App {
 
         Label loggedInAs = new Label("Tervetuloa " + this.user.getName());
         Label timeLabel = new Label(time);
+
         Button logOutButton = new Button("Kirjaudu ulos");
+        Button editUserInfo = new Button("Muokkaa käyttäjän tietoja");
         Button createABudget = new Button("Luo uusi budjetti");
 
         ToolBar toprow = new ToolBar();
@@ -214,7 +216,7 @@ public class App {
         rightSide.setPadding(new Insets(30, 20, 10, 20));
 
         VBox leftSide = new VBox();
-        leftSide.getChildren().addAll(logOutButton, createABudget);
+        leftSide.getChildren().addAll(logOutButton, editUserInfo, createABudget);
         leftSide.setSpacing(15);
         leftSide.setPadding(new Insets(10, 10, 10, 10));
 
@@ -348,6 +350,10 @@ public class App {
             table.getItems().remove(expense);
             loggedInScene();
         });
+        
+        editUserInfo.setOnAction((event) -> {
+            userInfoScene();
+        });
     }
 
     /**
@@ -400,6 +406,32 @@ public class App {
 
         changeScene.setOnAction((event) -> {
             loggedInScene();
+        });
+    }
+
+    public void userInfoScene() {
+        Label header = new Label("Käyttäjän tiedot:");
+        Label name = new Label("Nimi: " + this.user.getName());
+        Label username = new Label("Käyttäjätunnus: " + this.user.getUsername());
+        Button deleteUser = new Button("Poista käyttäjä");
+        Button returnButton = new Button("Palaa takaisin");
+
+        VBox vbox=  new VBox();
+        vbox.getChildren().addAll(header, name, username,deleteUser, returnButton);
+        vbox.setPadding(new Insets(200, 210, 200, 230));
+        vbox.setSpacing(15);
+
+        scene = new Scene(vbox, 820, 600);
+        primaryStage.setScene(scene);
+
+        returnButton.setOnAction((event) -> {
+            loggedInScene();
+        });
+        
+        deleteUser.setOnAction((event) -> {
+            budgetService.deleteUser(user);
+            this.user = null;
+            this.loginScene();
         });
     }
 
