@@ -237,16 +237,35 @@ public class BudgetService {
         }
         return true;
     }
-    
+
     public boolean deleteUserExpenses(User user) {
         try {
             List<Budget> budgets = this.findBudgets(user);
-            for(int i = 0; i < budgets.size(); i++) {
+            for (int i = 0; i < budgets.size(); i++) {
                 int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budgets.get(i).getName());
                 expenseDao.deleteExpensesFromBudget(id);
             }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean updateBudgetName(String newName, User user, String oldName) {
+        try {
+            int id = budgetDao.getIdByNameAndUsername(user.getUsername(), oldName);
+            budgetDao.updateBudgetName(id, newName);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean updateBudgetAmount(Double amount, User user, String budgetName) {
+        try {
+            int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budgetName);
+            budgetDao.updateBudgetAmount(id, amount);
         } catch(Exception e) {
-            System.out.println("virhe:" + e);
             return false;
         }
         return true;

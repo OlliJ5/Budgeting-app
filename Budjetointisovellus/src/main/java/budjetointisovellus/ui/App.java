@@ -186,8 +186,8 @@ public class App {
         Label timeLabel = new Label(time);
 
         Button logOutButton = new Button("Kirjaudu ulos");
-        Button editUserInfo = new Button("Muokkaa käyttäjän tietoja");
-        Button createABudget = new Button("Luo uusi budjetti");
+        Button editUserInfo = new Button("Käyttäjän tiedot");
+        Button createABudgetButton = new Button("Luo uusi budjetti");
 
         ToolBar toprow = new ToolBar();
         toprow.getItems().addAll(loggedInAs, timeLabel);
@@ -195,7 +195,7 @@ public class App {
 
         Label edit = new Label("Valitse muokattava budjetti: ");
         ChoiceBox cb = new ChoiceBox();
-        
+
         ArrayList<String> budgets = budgetService.findBudgets(user)
                 .stream()
                 .map(b -> b.getName())
@@ -218,7 +218,7 @@ public class App {
         rightSide.setPadding(new Insets(30, 20, 10, 20));
 
         VBox leftSide = new VBox();
-        leftSide.getChildren().addAll(logOutButton, editUserInfo, createABudget);
+        leftSide.getChildren().addAll(logOutButton, editUserInfo, createABudgetButton);
         leftSide.setSpacing(15);
         leftSide.setPadding(new Insets(10, 10, 10, 10));
 
@@ -238,22 +238,23 @@ public class App {
         priceCol.setMinWidth(180);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        Label addExpenses = new Label("Lisää kuluja:");
         TextField expenseName = new TextField();
         expenseName.setPromptText("Kulun nimi");
         expenseName.setMinWidth(nameCol.getPrefWidth());
         TextField expensePrice = new TextField();
         expensePrice.setPromptText("Kulun hinta");
         expensePrice.setMinWidth(priceCol.getPrefWidth());
-        Button addButton = new Button("Lisää");
+        Button addExpenseButton = new Button("Lisää");
 
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(expenseName, expensePrice, addButton);
-        hbox.setSpacing(5);
+        HBox expenseForm = new HBox();
+        expenseForm.getChildren().addAll(expenseName, expensePrice, addExpenseButton);
+        expenseForm.setSpacing(5);
 
         Label notification = new Label();
 
-        Button deleteBudgetButton = new Button("Poista bujetti");
         Label tableName = new Label();
+        Button showBudgetInfo = new Button("Näytä lisätietoja");
         tableName.setPadding(new Insets(5, 0, 0, 0));
         if (cb.getValue() != null) {
             tableName.setText(cb.getValue().toString() + " (" + budgetService.getBudgetByName(cb.getValue().toString(), user).getAmount() + ")");
@@ -261,7 +262,7 @@ public class App {
 
         HBox tableHeader = new HBox();
         if (!budgets.isEmpty()) {
-            tableHeader.getChildren().addAll(tableName, deleteBudgetButton);
+            tableHeader.getChildren().addAll(tableName, showBudgetInfo);
         }
         tableHeader.setSpacing(10);
         tableHeader.setPadding(new Insets(10, 10, 10, 10));
@@ -273,6 +274,7 @@ public class App {
 
         double sumOfExpenses = budgetService.totalExpenses(expenses);
 
+        Button deleteBudgetButton = new Button("Poista bujetti");
         Button deleteExpense = new Button("Poista kulu");
         Label expensesInTotal = new Label("Kulut yhteensä: " + sumOfExpenses);
         Label leftOfBudget = new Label();
@@ -287,10 +289,18 @@ public class App {
             }
         }
 
-        VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10, 5, 15, 15));
-        vbox.setSpacing(10);
-        vbox.getChildren().addAll(tableHeader, table, expensesInTotal, leftOfBudget, hbox, deleteExpense, notification);
+        HBox budgetInfo = new HBox();
+        budgetInfo.setSpacing(10);
+        budgetInfo.setPadding(new Insets(15, 0, 0, 0));
+
+        if (!budgets.isEmpty()) {
+            budgetInfo.getChildren().addAll(leftOfBudget, deleteBudgetButton);
+        }
+
+        VBox middle = new VBox();
+        middle.setPadding(new Insets(10, 5, 15, 15));
+        middle.setSpacing(10);
+        middle.getChildren().addAll(tableHeader, table, expensesInTotal, budgetInfo, addExpenses, expenseForm, deleteExpense, notification);
 
         cb.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if (newValue != null) {
@@ -305,7 +315,7 @@ public class App {
         BorderPane pane = new BorderPane();
         pane.setTop(toprow);
         pane.setLeft(sidePanel);
-        pane.setCenter(vbox);
+        pane.setCenter(middle);
         pane.setRight(rightSide);
 
         scene = new Scene(pane, 820, 600);
@@ -316,11 +326,15 @@ public class App {
             loginScene();
         });
 
-        createABudget.setOnAction((event) -> {
+        createABudgetButton.setOnAction((event) -> {
             createABudgetScene();
         });
 
-        addButton.setOnAction((event) -> {
+        showBudgetInfo.setOnAction((event) -> {
+            budgetInfoScene();
+        });
+
+        addExpenseButton.setOnAction((event) -> {
             if (cb.getValue() == null) {
                 notification.setText("Valitse muokattava budjetti!");
                 return;
@@ -347,6 +361,10 @@ public class App {
         });
 
         deleteExpense.setOnAction((event) -> {
+            if (cb.getValue() == null) {
+                notification.setText("Valitse muokattava budjetti!");
+                return;
+            }
             Expense expense = table.getSelectionModel().getSelectedItem();
             budgetService.deleteExpense(budgetService.getBudgetByName(cb.getValue().toString(), user), user, expense);
             table.getItems().remove(expense);
@@ -444,6 +462,69 @@ public class App {
                 this.loginScene();
             }
 
+        });
+    }
+
+    public void budgetInfoScene() {
+        Label header = new Label("Budjetin tiedot:");
+        Label nameInfo = new Label("Nimi: " + budget.getName());
+        Label amountInfo = new Label("Määrä: " + budget.getAmount());
+
+        Label editInfo = new Label("Muokkaa budjetin tietoja: ");
+        Label name = new Label("Nimi: ");
+        TextField newName = new TextField();
+        Button updateName = new Button("Muuta nimi");
+        Label amount = new Label("Määrä: ");
+        TextField newAmount = new TextField();
+        Button updateAmount = new Button("Muuta määrää");
+
+        Label notification = new Label();
+        Button returnButton = new Button("Palaa takaisin");
+
+        GridPane form = new GridPane();
+        form.add(name, 0, 0);
+        form.add(newName, 1, 0);
+        form.add(updateName, 2, 0);
+        form.add(amount, 0, 1);
+        form.add(newAmount, 1, 1);
+        form.add(updateAmount, 2, 1);
+
+        form.setHgap(10);
+        form.setVgap(10);
+
+        VBox formWithHeader = new VBox();
+        formWithHeader.getChildren().addAll(editInfo, form);
+        formWithHeader.setSpacing(20);
+        formWithHeader.setPadding(new Insets(30, 0, 0, 0));
+
+        VBox info = new VBox();
+        info.getChildren().addAll(header, nameInfo, amountInfo, formWithHeader, notification, returnButton);
+        info.setPadding(new Insets(150, 210, 200, 180));
+        info.setSpacing(25);
+
+        scene = new Scene(info, 820, 600);
+        primaryStage.setScene(scene);
+
+        returnButton.setOnAction((event) -> {
+            loggedInScene();
+        });
+
+        updateName.setOnAction((event) -> {
+            if (budgetService.updateBudgetName(newName.getText(), user, budget.getName())) {
+                budget = budgetService.getBudgetByName(newName.getText(), user);
+                budgetInfoScene();
+            }
+        });
+
+        updateAmount.setOnAction((event) -> {
+            if (!budgetService.isDouble(newAmount, newAmount.getText())) {
+                notification.setText(amount.getText() + " ei ole luku");
+                return;
+            }
+            if(budgetService.updateBudgetAmount(Double.parseDouble(newAmount.getText()), user, budget.getName())) {
+                budget = budgetService.getBudgetByName(budget.getName(), user);
+                budgetInfoScene();
+            }
         });
     }
 

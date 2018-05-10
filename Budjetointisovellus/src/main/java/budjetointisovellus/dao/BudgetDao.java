@@ -64,4 +64,8 @@ public interface BudgetDao {
     void delete(Budget budget, String username) throws SQLException;
     
     void deleteBudgetsOfUser(User user) throws SQLException;
+    
+    void updateBudgetName(int id, String name) throws SQLException;
+    
+    void updateBudgetAmount(int id, Double amount) throws SQLException;
 }

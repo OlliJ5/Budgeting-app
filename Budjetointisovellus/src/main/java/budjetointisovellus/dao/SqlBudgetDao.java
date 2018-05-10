@@ -134,4 +134,26 @@ public class SqlBudgetDao implements BudgetDao {
         connection.close();
     }
 
+    @Override
+    public void updateBudgetName(int id, String name) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE Budget SET name = (?) where id = (?);");
+        statement.setString(1, name);
+        statement.setInt(2, id);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    @Override
+    public void updateBudgetAmount(int id, Double amount) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE Budget SET amount = (?) where id = (?);");
+        statement.setDouble(1, amount);
+        statement.setInt(2, id);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
 }
