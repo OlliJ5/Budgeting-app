@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -27,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -470,6 +474,30 @@ public class App {
         Label nameInfo = new Label("Nimi: " + budget.getName());
         Label amountInfo = new Label("Määrä: " + budget.getAmount());
 
+        List<Expense> expenses = budgetService.findBudgetsExpenses(budget.getName(), user.getUsername());
+
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        
+        for(int i = 0; i < expenses.size(); i++) {
+            pieChartData.add(new PieChart.Data(expenses.get(i).getName(), expenses.get(i).getPrice()));
+        }
+        
+        PieChart chart = new PieChart(pieChartData);
+        chart.setLabelLineLength(25);
+        chart.setLegendSide(Side.RIGHT);
+        chart.setTitle("Budjetin kulut");
+
+        Pane pane = new Pane();
+        chart.setLayoutX(280);
+        chart.setLayoutY(-230);
+        pane.getChildren().add(chart);
+
+        GridPane info = new GridPane();
+        info.add(header, 0, 0);
+        info.add(nameInfo, 0, 1);
+        info.add(amountInfo, 0, 2);
+        info.setVgap(30);
+
         Label editInfo = new Label("Muokkaa budjetin tietoja: ");
         Label name = new Label("Nimi: ");
         TextField newName = new TextField();
@@ -497,12 +525,12 @@ public class App {
         formWithHeader.setSpacing(20);
         formWithHeader.setPadding(new Insets(30, 0, 0, 0));
 
-        VBox info = new VBox();
-        info.getChildren().addAll(header, nameInfo, amountInfo, formWithHeader, notification, returnButton);
-        info.setPadding(new Insets(150, 210, 200, 180));
-        info.setSpacing(25);
+        VBox view = new VBox();
+        view.getChildren().addAll(info, pane, formWithHeader, notification, returnButton);
+        view.setPadding(new Insets(90, 210, 200, 20));
+        view.setSpacing(50);
 
-        scene = new Scene(info, 820, 600);
+        scene = new Scene(view, 820, 600);
         primaryStage.setScene(scene);
 
         returnButton.setOnAction((event) -> {
@@ -518,10 +546,10 @@ public class App {
 
         updateAmount.setOnAction((event) -> {
             if (!budgetService.isDouble(newAmount, newAmount.getText())) {
-                notification.setText(amount.getText() + " ei ole luku");
+                notification.setText(newAmount.getText() + " ei ole luku");
                 return;
             }
-            if(budgetService.updateBudgetAmount(Double.parseDouble(newAmount.getText()), user, budget.getName())) {
+            if (budgetService.updateBudgetAmount(Double.parseDouble(newAmount.getText()), user, budget.getName())) {
                 budget = budgetService.getBudgetByName(budget.getName(), user);
                 budgetInfoScene();
             }
