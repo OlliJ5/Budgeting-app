@@ -1,6 +1,7 @@
 package budjetointisovellus.dao;
 
 import budjetointisovellus.domain.Budget;
+import budjetointisovellus.domain.User;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -61,4 +62,6 @@ public interface BudgetDao {
      * @param username käyttäjätunnus, johon budjetti liittyy
      */
     void delete(Budget budget, String username) throws SQLException;
+    
+    void deleteBudgetsOfUser(User user) throws SQLException;
 }

@@ -6,13 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -24,7 +27,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -193,7 +195,7 @@ public class App {
 
         Label edit = new Label("Valitse muokattava budjetti: ");
         ChoiceBox cb = new ChoiceBox();
-
+        
         ArrayList<String> budgets = budgetService.findBudgets(user)
                 .stream()
                 .map(b -> b.getName())
@@ -350,7 +352,7 @@ public class App {
             table.getItems().remove(expense);
             loggedInScene();
         });
-        
+
         editUserInfo.setOnAction((event) -> {
             userInfoScene();
         });
@@ -416,8 +418,8 @@ public class App {
         Button deleteUser = new Button("Poista käyttäjä");
         Button returnButton = new Button("Palaa takaisin");
 
-        VBox vbox=  new VBox();
-        vbox.getChildren().addAll(header, name, username,deleteUser, returnButton);
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(header, name, username, deleteUser, returnButton);
         vbox.setPadding(new Insets(200, 210, 200, 230));
         vbox.setSpacing(15);
 
@@ -427,11 +429,21 @@ public class App {
         returnButton.setOnAction((event) -> {
             loggedInScene();
         });
-        
+
         deleteUser.setOnAction((event) -> {
-            budgetService.deleteUser(user);
-            this.user = null;
-            this.loginScene();
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Poisto");
+            alert.setHeaderText("Haluatko poistaa?");
+            alert.setContentText("Valitse ok poistaaksesi.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                budgetService.deleteUser(user);
+                budget = null;
+                user = null;
+                this.loginScene();
+            }
+
         });
     }
 

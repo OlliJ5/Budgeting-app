@@ -15,7 +15,7 @@ public class SqlBudgetDao implements BudgetDao {
     private Database database;
 
     /**
-     * 
+     *
      * @param database Database-olio, jota halutaan käyttää tiedon talletukseen
      */
     public SqlBudgetDao(Database database) {
@@ -119,6 +119,16 @@ public class SqlBudgetDao implements BudgetDao {
         PreparedStatement statement = connection.prepareStatement("DELETE FROM Budget WHERE user_username = (?) AND name = (?);");
         statement.setString(1, username);
         statement.setString(2, budget.getName());
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    @Override
+    public void deleteBudgetsOfUser(User user) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM Budget WHERE user_username = (?);");
+        statement.setString(1, user.getUsername());
         statement.executeUpdate();
         statement.close();
         connection.close();

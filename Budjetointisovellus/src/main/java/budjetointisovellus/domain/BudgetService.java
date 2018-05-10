@@ -229,8 +229,24 @@ public class BudgetService {
 
     public boolean deleteUser(User user) {
         try {
+            this.deleteUserExpenses(user);
+            budgetDao.deleteBudgetsOfUser(user);
             userDao.delete(user);
         } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean deleteUserExpenses(User user) {
+        try {
+            List<Budget> budgets = this.findBudgets(user);
+            for(int i = 0; i < budgets.size(); i++) {
+                int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budgets.get(i).getName());
+                expenseDao.deleteExpensesFromBudget(id);
+            }
+        } catch(Exception e) {
+            System.out.println("virhe:" + e);
             return false;
         }
         return true;

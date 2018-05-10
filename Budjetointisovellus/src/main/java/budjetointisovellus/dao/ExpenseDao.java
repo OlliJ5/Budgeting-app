@@ -42,4 +42,5 @@ public interface ExpenseDao {
      * @param expense Kulu, joka halutaan poistaa
      */
     void delete(int budgetId, Expense expense) throws SQLException;
+    
 }
