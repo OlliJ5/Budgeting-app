@@ -329,6 +329,7 @@ public class App {
 
         logOutButton.setOnAction((event) -> {
             this.user = null;
+            this.budget = null;
             loginScene();
         });
 
