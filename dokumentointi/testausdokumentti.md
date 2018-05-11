@@ -24,14 +24,21 @@ SqlExpenseDao on testattu JUnit-testeillä. Testit löytyvät pakkauksesta daoTe
 test.db(jos sitä ei vielä ole olemassa), alustaa sinne aina jotain tietoa ja sitten muokkaa tietokannan tietoja ja
 tarkistaa, että tietokannan tiedot ovat muuttuneet halutulla tavalla
 
-### Testauskattavuus
+### Testikattavuus
+
+Sovelluksen testien rivikattavuus on 93% ja haarautumakattavuus on 78%. Testikattavuudessa ei oteta huomioon
+budjetointisovellus.ui-pakettia eli käyttöliittymää.
+
+<img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/testikattavuus.png" width="800">
 
 ## Järjestelmätestaus
 
 Sovelluksen järjestelmätestaus on suoritettu manuaalisesti.
+
 ## Asennus ja konfigurointi
+Sovellusta on testattu Linux-käyttöjärjestelmällä.
 
 ## Toiminnallisuudet
 
 Kaikki määrittelydokumentin listaamant toiminnallisuudet on käyty läpi ja yritetty rikkoa. Toiminnallisuutta on
-yritetty rikkoa antamalla mm. syötekenttään merkkijono kun se haluaa luvun.
+yritetty rikkoa antamalla mm. syötekenttään virheellisiä syötteitä, kuten merkkijonon kun se haluaa luvun.
