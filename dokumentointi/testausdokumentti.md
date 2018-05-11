@@ -36,9 +36,13 @@ budjetointisovellus.ui-pakettia eli käyttöliittymää.
 Sovelluksen järjestelmätestaus on suoritettu manuaalisesti.
 
 ## Asennus ja konfigurointi
-Sovellusta on testattu Linux-käyttöjärjestelmällä.
+Sovellusta on testattu Linux-käyttöjärjestelmällä käyttöohjeen kuvaamalla tavalla. Sovellusta on testattu niin, että budget.db eli tietokantadokumentti on ollut valmiina käynnistyshakemistossa sekä niin, että sitä ei ole, jolloin ohjelma luon sen automaattisesti.
 
 ## Toiminnallisuudet
 
 Kaikki määrittelydokumentin listaamant toiminnallisuudet on käyty läpi ja yritetty rikkoa. Toiminnallisuutta on
 yritetty rikkoa antamalla mm. syötekenttään virheellisiä syötteitä, kuten merkkijonon kun se haluaa luvun.
+
+# Sovellukseen jääneet laatuongelmat
+
+Sovellus ei anna kuvaavia virheilmoituksia, jos tietokannan kanssa eli sinne tallentamisessa tai sieltä lukemisessa ilmenee jotain ongelmia.
