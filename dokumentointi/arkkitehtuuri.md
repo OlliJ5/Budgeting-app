@@ -77,3 +77,16 @@ Kun käyttäjä on userCreationScenessä kirjoittanut tekstikenttiin käyttäjä
 <img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/createAUserDiagram.png" width="900">
 
 Luomisnapin tapahtumakäsittelijä kutsuu budgetServicen metodia createUser, jonka parametreiksi tulee käyttäjätunnus, nimi ja salasana. BudgetService selvittää userDaon avulla onko käyttäjätunnus jo olemassa, jos ei niin sitten luodaan userDaon avulla uusi käyttäjä. BudgetService palauttaa käyttöliittymälle true merkiksi käyttäjän luomisen onnistumisesta. UI asettaa viestin käyttäjän näkyville uuden käyttäjän luomisen onnistumisesta.
+
+### Budjetin luominen
+Kun käyttäjä on createABudgetScenessä ja on syöttänyt syötekenttiin hyväksyttävät tiedot etenee sovelluksen kontrolli suraavasti
+
+<img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/createBudgetDiagram.png" width="">
+
+Luomisnapin tapahtumakäsittelijä kutsuu budgetServicen metodia createBudget, jonka parametreiksi tulee budjetti sekä käyttäjä. BudgetService selvittää budgetDaon avulla, onko samanlainen budjetti jo olemassa, jos ei, niin budgetDao palauttaa false ja budgetService kutsuu budgetDaon metodia create, jolloin budgetDao tallentaa uuden budjetin. budgetService palautta UI:lle true ja näkymä vaihdetaan päänäkymään loggenInScene-metodilla.
+
+## Ohjelman rakenteisiin jääneet heikkoudet
+
+### Käyttöliittymä
+
+Käyttöliittymä rakennetaan kokonaan samassa luokassa ja vaikka näkymät ovat omissa metodeissaan, voisi ne eristää jopa omiksi luokikseen. Tietyissä metodeissa myös nimentä saisi olla parempaa ja suurin osa huonoista muuttujien nimistä on jäänyt sovellukseen refaktoroinnin myötä. Käyttöliittymässä voisi käyttää myös FXML:ää, jotta toiminnallisuuksien koodi olisi helpommin erillään käyttöliittymän rakentavan koodin kanssa. Silloin voisi myös käyttää Scene Builderia ja tehdä käyttöliittymästä siistimmän näköisen.
