@@ -19,6 +19,12 @@ public class BudgetService {
     private UserDao userDao;
     private BudgetDao budgetDao;
 
+    /**
+     *
+     * @param expenseDao
+     * @param userDao
+     * @param budgetDao
+     */
     public BudgetService(ExpenseDao expenseDao, UserDao userDao, BudgetDao budgetDao) {
         this.expenseDao = expenseDao;
         this.userDao = userDao;
@@ -198,7 +204,7 @@ public class BudgetService {
     /**
      * Kulun poistaminen
      *
-     * @param budget Budjetti, jonka kulu halutaan poistaaa
+     * @param budget Budjetti, jonka kulu halutaan poistaa
      * @param user Käyttäjä, jonka budjetti on
      * @param expense Poistettava kulu
      * @return true, jos poista onnistuu, muuten false
@@ -227,6 +233,12 @@ public class BudgetService {
         return total;
     }
 
+    /**
+     * Käyttäjän ja siihen liittyvien budjettien sekä kulujen poistaminen
+     *
+     * @param user käyttäjä, joka halutaan poistaa
+     * @return true, jos poisto onnistuu, muuten false
+     */
     public boolean deleteUser(User user) {
         try {
             this.deleteUserExpenses(user);
@@ -238,6 +250,12 @@ public class BudgetService {
         return true;
     }
 
+    /**
+     * Poistaa käyttäjään liittyvät kulut
+     *
+     * @param user käyttäjä, jonka kulut halutaan poistaa
+     * @return true, jos poisto onnistuu, muuten false
+     */
     public boolean deleteUserExpenses(User user) {
         try {
             List<Budget> budgets = this.findBudgets(user);
@@ -250,7 +268,15 @@ public class BudgetService {
         }
         return true;
     }
-    
+
+    /**
+     * Budjetin nimen päivitys
+     *
+     * @param newName nimi, joka budjetille halutaan asettaa
+     * @param user käyttäjä, jolle budjetti kuuluu
+     * @param oldName budjetin vanha nimi, eli nimi, joka halutaan muuttaa
+     * @return true, jos muutos onnistuu, muuten false
+     */
     public boolean updateBudgetName(String newName, User user, String oldName) {
         try {
             int id = budgetDao.getIdByNameAndUsername(user.getUsername(), oldName);
@@ -260,12 +286,20 @@ public class BudgetService {
         }
         return true;
     }
-    
+
+    /**
+     * Budjetin määrän päivitys
+     *
+     * @param amount määrä, joka budjetille halutaan asettaa
+     * @param user käyttäjä, jolle budjetti kuuluu
+     * @param budgetName budjetin, jonka määrää halutaan muuttaa, nimi
+     * @return true, jos muutos onnistuu, muuten false
+     */
     public boolean updateBudgetAmount(Double amount, User user, String budgetName) {
         try {
             int id = budgetDao.getIdByNameAndUsername(user.getUsername(), budgetName);
             budgetDao.updateBudgetAmount(id, amount);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -274,7 +308,6 @@ public class BudgetService {
     /**
      * Tarkistaa onko luku liukuluku
      *
-     * @param input Tekstikenttä, jonka sisältä halutaan tarkistaa
      * @param message Tekstikentän sisältö
      * @return True, jos luku on liukuluku, muuten false
      */

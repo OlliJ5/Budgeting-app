@@ -63,9 +63,27 @@ public interface BudgetDao {
      */
     void delete(Budget budget, String username) throws SQLException;
     
+    /**
+     * Käyttäjän budjettien poisto
+     * 
+     * @param user käyttäjä, jonka budjetit halutaan poistaa
+     */
     void deleteBudgetsOfUser(User user) throws SQLException;
     
+    /**
+     * Budjetin nimen muuttaminen
+     * 
+     * @param id budjetin, jonka nimenä halutaan muuttaa, id
+     * @param name uusi nimi budjetille
+     * @throws SQLException
+     */
     void updateBudgetName(int id, String name) throws SQLException;
     
+    /**
+     * Budjetin määrän muuttaminen
+     * @param id budjetin, jonka määrää halutaan muuttaa, id
+     * @param amount uusi määrä budjetille
+     * @throws SQLException
+     */
     void updateBudgetAmount(int id, Double amount) throws SQLException;
 }

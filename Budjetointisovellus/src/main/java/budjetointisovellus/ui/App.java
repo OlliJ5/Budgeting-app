@@ -433,6 +433,10 @@ public class App {
         });
     }
 
+    /**
+     * Luo näkymän, jossa näkyy käyttäjän tiedot ja käyttäjän voi poistaa sekä
+     * asettaa sen Stageen
+     */
     public void userInfoScene() {
         Label header = new Label("Käyttäjän tiedot:");
         Label name = new Label("Nimi: " + this.user.getName());
@@ -469,6 +473,10 @@ public class App {
         });
     }
 
+    /**
+     * Luo näkymän, jossa näytetään budjetin tiedot ja budjetin nimeä ja määrää
+     * voi muuttaa. Näkymä asetetaan Stageen
+     */
     public void budgetInfoScene() {
         Label header = new Label("Budjetin tiedot:");
         Label nameInfo = new Label("Nimi: " + budget.getName());
@@ -476,12 +484,14 @@ public class App {
 
         List<Expense> expenses = budgetService.findBudgetsExpenses(budget.getName(), user.getUsername());
 
+        Label spentMoney = new Label("Budjetin kulut yhteensä: " + budgetService.totalExpenses(expenses));
+
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        
-        for(int i = 0; i < expenses.size(); i++) {
+
+        for (int i = 0; i < expenses.size(); i++) {
             pieChartData.add(new PieChart.Data(expenses.get(i).getName(), expenses.get(i).getPrice()));
         }
-        
+
         PieChart chart = new PieChart(pieChartData);
         chart.setLabelLineLength(25);
         chart.setLegendSide(Side.RIGHT);
@@ -496,6 +506,7 @@ public class App {
         info.add(header, 0, 0);
         info.add(nameInfo, 0, 1);
         info.add(amountInfo, 0, 2);
+        info.add(spentMoney, 0, 3);
         info.setVgap(30);
 
         Label editInfo = new Label("Muokkaa budjetin tietoja: ");

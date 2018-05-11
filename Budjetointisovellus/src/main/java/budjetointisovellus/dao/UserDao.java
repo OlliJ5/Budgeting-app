@@ -41,6 +41,11 @@ public interface UserDao {
      */
     boolean usernameAndPasswordCorrect(String name, String password) throws SQLException;
     
+    /**
+     * Käyttäjän poistaminen
+     * @param user käyttäjä, joka halutaan poistaa
+     * @return poistettu käyttäjä
+     */
     User delete(User user) throws SQLException;
     
 }
