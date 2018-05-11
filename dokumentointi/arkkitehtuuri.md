@@ -41,8 +41,32 @@ Koko ohjelmaa kuvaava pakkaus/luokkakaavio:
 
 Budjetointisovellus.dao-pakkauksessa sijaitsevat luokat SqlUserDao, SqlBudgetDao sekä SqlExpenseDao huolehtivat tietojen pysyväistallennuksesta tietokantaan. Luokat noudattavat Data Access Object -suunnittelumallia ja ne voidaan tarvittaessa korvata uusilla toteutuksilla, jos datan talletustapaa päätetään vaihtaa. Luokat on eristetty rajapintojen TodoDao ja UserDao taakse ja sovelluslogiikka ei käytä luokkia suoraan.
 
+Testauksessa käytetään osin SqlDao-luokkien sijaan FakeDao-luokkia, jotka nekin toteuttavat Dao-rajapinnat.
+
+### Tietokanta
+
+Tietokanta on toteutettu SQLiten avulla ja sovellus tallentaa tiedot tiedostoon budget.db. Tietokannassa on kolme taulua, jotka ovat User, Budget ja Expense.
+
+Taulujen luomiseen käytetään seuraavia lauseita:
+
+User: CREATE TABLE User(id integer PRIMARY KEY, username varchar(200), name varchar(200), password varchar(60));
+
+User-taulussa kaikilla riveillä on pääavain, käyttäjätunnus, nimi ja salasana(joka on hashattu)
+
+Budget: CREATE TABLE Budget(id integer PRIMARY KEY, user_username varchar(200), name varchar(200), amount float, FOREIGN KEY (user_username) REFERENCES User(username));
+
+Budget-taulussa kaikilla riveillä on pääavain sekä viiteavain, joka liittyy tiettyyn käyttäjätunnuksee ja nimi ja määrä
+
+Expense: CREATE TABLE Expense(id integer PRIMARY KEY, budget_id integer, name varchar(200), price float, FOREIGN KEY (budget_id) REFERENCES Budget(id));
+
+Expense-taulussa kaikilla riveillä on pääavain sekä viiteavain, joka liittyy tiettyyn budjettiin ja nimi ja määrä 
+
+
 ## Päätoiminnallisuudet
 
 ## Kirjautuminen
+Kun käyttäjä painaa 'Kirjaudu sisään' ja on syöttänyt syötekenttiin oikeat tiedot etenee sovelluksen kontrolli seuraavasti:
 
 <img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/loginDiagram.png" width="800">
+
+Kirjautumisnapin tapahtumakäsittelijä kutsuu budgetServicen metodia login, jonka parametreiksi tulee käyttäjätunnus ja salasana. budgetService selvittää userDaon avulla käyttäjätunnuksen ja salasanan paikkaansapitävyyden. Jos ne pitävät paikkaansa hakee sovellus vielä käyttöönsä tietokannasta User-olion ja vaihtaa näkymän loggedInSceneksi eli sovelluksen päänäkymäksi.
