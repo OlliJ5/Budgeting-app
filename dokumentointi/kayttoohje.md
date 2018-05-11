@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [Budjetointisovellus.jar](https://github.com/OlliJ5/otm-harjoitustyo/releases)
+Lataa tiedosto [Budjetointisovellus.jar](https://github.com/OlliJ5/otm-harjoitustyo/releases/tag/loppupalautus)
 
 ## Ohjelman käynnistäminen 
 Ohjelma käynnistetään komennolla
