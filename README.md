@@ -10,10 +10,13 @@ Projekti kurssille Ohjelmistotekniikan menetelmät. Sovelluksessa käyttäjät v
 
 [Arkkitehtuurikuvaus](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
-[Ensimmäinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases)
+[Testausdokumentti](https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/testausdokumentti.md)
+
+## Releaset
+
+[Ensimmäinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases/tag/Viikko5)
 
 [Toinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases/tag/Viikko6)
-
 
 ## Komentorivikomennot
 
@@ -32,7 +35,7 @@ mvn test
 
 Testikattavuusraportti suoritetaan komennolla
 ```
-mvn jacoco:report
+mvn test jacoco:report
 ```
 Raporttia voi tarkastella avaamalla selaimella tiedoston target/site/jacoco/index.html
 
