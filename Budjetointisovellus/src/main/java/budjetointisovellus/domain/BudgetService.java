@@ -278,9 +278,9 @@ public class BudgetService {
      * @param message Tekstikentän sisältö
      * @return True, jos luku on liukuluku, muuten false
      */
-    public boolean isDouble(TextField input, String message) {
+    public boolean isDouble(String message) {
         try {
-            Double number = Double.parseDouble(input.getText());
+            Double number = Double.parseDouble(message);
             return true;
         } catch (NumberFormatException e) {
             return false;

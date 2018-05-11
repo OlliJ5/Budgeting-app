@@ -41,6 +41,6 @@ public interface UserDao {
      */
     boolean usernameAndPasswordCorrect(String name, String password) throws SQLException;
     
-    void delete(User user) throws SQLException;
+    User delete(User user) throws SQLException;
     
 }

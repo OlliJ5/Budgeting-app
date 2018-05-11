@@ -52,4 +52,10 @@ public class FakeUserDao implements UserDao {
         return false;
     }
 
+    @Override
+    public User delete(User user) throws SQLException {
+        this.users.remove(new User("username", "name", "password"));
+        return user;
+    }
+
 }

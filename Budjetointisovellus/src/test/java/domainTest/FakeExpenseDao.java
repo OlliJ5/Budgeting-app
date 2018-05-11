@@ -30,7 +30,7 @@ public class FakeExpenseDao implements ExpenseDao {
 
     @Override
     public void deleteExpensesFromBudget(int budgetId) throws SQLException {
-        
+        this.expenses.clear();
     }
 
     @Override

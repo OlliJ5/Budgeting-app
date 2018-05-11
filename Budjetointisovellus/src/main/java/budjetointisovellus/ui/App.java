@@ -342,7 +342,7 @@ public class App {
             if (cb.getValue() == null) {
                 notification.setText("Valitse muokattava budjetti!");
                 return;
-            } else if (!budgetService.isDouble(expensePrice, expensePrice.getText())) {
+            } else if (!budgetService.isDouble(expensePrice.getText())) {
                 notification.setText(expensePrice.getText() + " ei ole luku!");
                 return;
             }
@@ -409,7 +409,7 @@ public class App {
         primaryStage.setScene(scene);
 
         submit.setOnAction((event) -> {
-            if (!budgetService.isDouble(amount, amount.getText())) {
+            if (!budgetService.isDouble(amount.getText())) {
                 notification.setText(amount.getText() + " ei ole luku");
                 return;
             }
@@ -545,7 +545,7 @@ public class App {
         });
 
         updateAmount.setOnAction((event) -> {
-            if (!budgetService.isDouble(newAmount, newAmount.getText())) {
+            if (!budgetService.isDouble(newAmount.getText())) {
                 notification.setText(newAmount.getText() + " ei ole luku");
                 return;
             }

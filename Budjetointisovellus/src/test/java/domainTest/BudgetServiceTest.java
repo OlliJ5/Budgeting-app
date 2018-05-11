@@ -116,7 +116,7 @@ public class BudgetServiceTest {
         int sizeBeforeRemoval = budgetService.findBudgets(this.user).size();
         budgetService.deleteBudget(new Budget("uusi", 400), this.user);
         int sizeAfterRemoval = budgetService.findBudgets(this.user).size();
-        assertEquals(sizeAfterRemoval, sizeBeforeRemoval);
+        assertEquals(sizeBeforeRemoval, sizeAfterRemoval + 1);
 
     }
     
@@ -136,6 +136,38 @@ public class BudgetServiceTest {
         expenses.add(new Expense("olut", 400));
         
         assertEquals(415, budgetService.totalExpenses(expenses), 0.01);
+    }
+    
+    @Test
+    public void idDoubleReturnsTrueWhenGivenADouble() {
+        Boolean returned = budgetService.isDouble("8.5");
+        assertTrue(returned);
+    }
+    
+    @Test
+    public void isDoubleReturnsFalseWhenNotGivenDouble() {
+        Boolean returned = budgetService.isDouble("notADouble");
+        assertFalse(returned);
+    }
+    
+    @Test
+    public void updateBudgetAmountUpdatesAmount() {
+        assertTrue(budgetService.updateBudgetAmount(1000.0, user, "lomamatka"));
+    }
+    
+    @Test
+    public void updateBudgetNameUpdatesName() {
+        assertTrue(budgetService.updateBudgetName("lomamatka", user, "lomamatka"));
+    }
+    
+    @Test
+    public void deleteUserExpensesDeletesExpenses() {
+        assertTrue(budgetService.deleteUserExpenses(user));
+    }
+    
+    @Test
+    public void deleteUserDeletesUser() {
+        assertTrue(budgetService.deleteUser(user));
     }
 
 }

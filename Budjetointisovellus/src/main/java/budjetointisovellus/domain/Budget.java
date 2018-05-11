@@ -29,6 +29,14 @@ public class Budget {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

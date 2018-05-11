@@ -37,7 +37,8 @@ public class SqlBudgetDaoTest {
     @Test
     public void budgetCreationWorks() throws Exception {
         Budget budget = new Budget("lomamatka", 700);
-        assertEquals(budget, budgetDao.create(budget, user.getUsername()));
+        budgetDao.create(budget, user.getUsername());
+        budgetDao.budgetExists(budget, user.getUsername());
     }
 
     @Test
@@ -82,6 +83,28 @@ public class SqlBudgetDaoTest {
         budgetDao.delete(new Budget("new", 0), user.getUsername());
         int sizeAfterRemoval = budgetDao.findBudgetsByUsername(user.getUsername()).size();
         assertEquals(sizeBeforeRemoval, sizeAfterRemoval + 1);
+    }
+    
+    @Test
+    public void updateBudgetNameUpdatesNameCorrectly() throws Exception {
+        int idBeforeNameChange = budgetDao.getIdByNameAndUsername(user.getUsername(), "testName");
+        budgetDao.updateBudgetName(idBeforeNameChange, "testNameUpdated");
+        int idAfterNameChange = budgetDao.getIdByNameAndUsername(user.getUsername(), "testNameUpdated");
+        assertEquals(idBeforeNameChange, idAfterNameChange);
+    }
+    
+    @Test
+    public void updateBudgetAmount() throws Exception {
+        int id = budgetDao.getIdByNameAndUsername(user.getUsername(), "testName");
+        budgetDao.updateBudgetAmount(id, 620.0);
+        Budget budget = budgetDao.findOne("testName", user.getUsername());
+        assertEquals(new Budget("testName", 620.0), budget);
+    }
+
+    @Test
+    public void deleteBudgetsOfUserWorks() throws Exception {
+        budgetDao.deleteBudgetsOfUser(user);
+        assertTrue(budgetDao.findBudgetsByUsername("testUsername").isEmpty());
     }
 
     @After

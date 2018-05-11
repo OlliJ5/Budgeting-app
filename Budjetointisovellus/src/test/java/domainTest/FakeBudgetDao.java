@@ -2,6 +2,7 @@ package domainTest;
 
 import budjetointisovellus.dao.BudgetDao;
 import budjetointisovellus.domain.Budget;
+import budjetointisovellus.domain.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,23 @@ public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public void delete(Budget budget, String username) throws SQLException {
-        
+        budgets.remove(budget);
     }
 
+    @Override
+    public void deleteBudgetsOfUser(User user) throws SQLException {
+        budgets.clear();
+    }
+
+    @Override
+    public void updateBudgetName(int id, String name) throws SQLException {
+        budgets.get(id - 1).setName(name);
+    }
+
+    @Override
+    public void updateBudgetAmount(int id, Double amount) throws SQLException {
+        budgets.get(id - 1).setAmount(amount);
+    }
+    
+    
 }

@@ -102,13 +102,14 @@ public class SqlUserDao implements UserDao {
     }
 
     @Override
-    public void delete(User user) throws SQLException {
+    public User delete(User user) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement statement = connection.prepareStatement("DELETE FROM User WHERE username = ?;");
         statement.setString(1, user.getUsername());
         statement.executeUpdate();
         statement.close();
         connection.close();
+        return user;
     }
 
 }

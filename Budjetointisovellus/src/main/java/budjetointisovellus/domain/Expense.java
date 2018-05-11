@@ -1,5 +1,7 @@
 package budjetointisovellus.domain;
 
+import java.util.Objects;
+
 /**
  *
  * Luokka kuvaa yksittäistä kulua
@@ -25,6 +27,33 @@ public class Expense {
 
     public double getPrice() {
         return this.price;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Expense other = (Expense) obj;
+        if (Double.doubleToLongBits(this.price) != Double.doubleToLongBits(other.price)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
     }
 
 }

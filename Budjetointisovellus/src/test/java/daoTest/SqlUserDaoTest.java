@@ -37,11 +37,17 @@ public class SqlUserDaoTest {
 
         assertEquals(user, userDao.findByUsername("testUsername"));
     }
+    
+    @Test
+    public void findByUsernameReturnsNullIfUserDoesNotExist() throws Exception {
+        assertEquals(null, userDao.findByUsername("wrong"));
+    }
 
     @Test
     public void userCreationWorks() throws Exception {
         User user = new User("newUsername", "newName", "newPassword");
-        assertEquals(user, userDao.create(user));
+        userDao.create(user);
+        assertEquals(user, userDao.findByUsername("newUsername"));
     }
 
     @Test
@@ -52,6 +58,13 @@ public class SqlUserDaoTest {
     @Test
     public void returnsFalseWhenUsernameDoesNotExist() throws Exception {
         assertFalse(userDao.usernameExists("wrong"));
+    }
+    
+    @Test
+    public void deletionWorks() throws Exception {
+        User user = new User("testUsername", "testName", "testPassword");
+        userDao.delete(user);
+        assertFalse(userDao.usernameExists("testUsername"));
     }
 
     @After
