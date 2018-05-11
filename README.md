@@ -18,6 +18,8 @@ Projekti kurssille Ohjelmistotekniikan menetelmät. Sovelluksessa käyttäjät v
 
 [Toinen Release](https://github.com/OlliJ5/otm-harjoitustyo/releases/tag/Viikko6)
 
+[Loppupalautus](https://github.com/OlliJ5/otm-harjoitustyo/releases/tag/loppupalautus)
+
 ## Komentorivikomennot
 
 ### Suoritus
