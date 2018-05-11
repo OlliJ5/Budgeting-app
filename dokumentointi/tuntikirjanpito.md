@@ -25,4 +25,9 @@
 | |1|Viikon 5 vaatimusten viimeistely(jar, release)
 |28.4.|3|Kulujen poisto ja budjetin poiston parantaminen + tieto yhteiskuluista sekä paljonko budjettia jäljellä
 |2.5.|2|Dokumentaatiota
-|Yhteensä|35.5|
+|9.5.|2|Uusien toiminnallisuuksien miettimistä, käyttäjän poistaminen
+|10.5.|4|Bugien korjauksia sekä uuden näkymän luominen, jossa voi muokata budjetin tietoja ja siel on kans kiva PieChart
+|11.5.|3|Testejä
+||1|Vähän koodausta, bugien korjausta ja muuta pientä
+||4|Dokumentaatiota ja loppupalautuksen viimeistelyä
+|Yhteensä|50.5|
