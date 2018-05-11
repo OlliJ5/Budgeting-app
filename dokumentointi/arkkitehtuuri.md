@@ -64,9 +64,16 @@ Expense-taulussa kaikilla riveillä on pääavain sekä viiteavain, joka liittyy
 
 ## Päätoiminnallisuudet
 
-## Kirjautuminen
+### Kirjautuminen
 Kun käyttäjä painaa 'Kirjaudu sisään' ja on syöttänyt syötekenttiin oikeat tiedot etenee sovelluksen kontrolli seuraavasti:
 
 <img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/loginDiagram.png" width="800">
 
 Kirjautumisnapin tapahtumakäsittelijä kutsuu budgetServicen metodia login, jonka parametreiksi tulee käyttäjätunnus ja salasana. budgetService selvittää userDaon avulla käyttäjätunnuksen ja salasanan paikkaansapitävyyden. Jos ne pitävät paikkaansa hakee sovellus vielä käyttöönsä tietokannasta User-olion ja vaihtaa näkymän loggedInSceneksi eli sovelluksen päänäkymäksi.
+
+### Uuden käyttäjän luominen
+Kun käyttäjä on userCreationScenessä kirjoittanut tekstikenttiin käyttäjätunnuksen, nimen sekä salasanan ja painaa 'Luo käyttäjä', etenee sovelluksen kontrolli seuraavasti:
+
+<img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/createAUserDiagram.png" width="900">
+
+Luomisnapin tapahtumakäsittelijä kutsuu budgetServicen metodia createUser, jonka parametreiksi tulee käyttäjätunnus, nimi ja salasana. BudgetService selvittää userDaon avulla onko käyttäjätunnus jo olemassa, jos ei niin sitten luodaan userDaon avulla uusi käyttäjä. BudgetService palauttaa käyttöliittymälle true merkiksi käyttäjän luomisen onnistumisesta. UI asettaa viestin käyttäjän näkyville uuden käyttäjän luomisen onnistumisesta.
