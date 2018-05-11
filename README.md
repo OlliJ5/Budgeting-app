@@ -53,6 +53,7 @@ Suoritettavan jarin voi generoida komennolla
 ```
 mvn package
 ```
+Luo hakemistoon target jar-tiedoston Budjetointisovellus-1.0-SNAPSHOT.jar 
 
 ### JavaDoc
 JavaDoc generoidaan komennolla
