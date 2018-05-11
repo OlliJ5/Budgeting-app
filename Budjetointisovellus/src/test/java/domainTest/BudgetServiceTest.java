@@ -119,7 +119,7 @@ public class BudgetServiceTest {
         assertEquals(sizeBeforeRemoval, sizeAfterRemoval + 1);
 
     }
-    
+
     @Test
     public void expenseDeletionWorks() {
         budgetService.createExpense(this.user.getUsername(), "lomamatka", "ruokailu", 20.0);
@@ -128,43 +128,43 @@ public class BudgetServiceTest {
         int sizeAfterRemoval = budgetService.findBudgetsExpenses("lomamatka", this.user.getUsername()).size();
         assertEquals(sizeBeforeRemoval, sizeAfterRemoval + 1);
     }
-    
+
     @Test
     public void totalExpenses() {
         List<Expense> expenses = new ArrayList<>();
         expenses.add(new Expense("ruoka", 15));
         expenses.add(new Expense("olut", 400));
-        
+
         assertEquals(415, budgetService.totalExpenses(expenses), 0.01);
     }
-    
+
     @Test
-    public void idDoubleReturnsTrueWhenGivenADouble() {
+    public void isDoubleReturnsTrueWhenGivenADouble() {
         Boolean returned = budgetService.isDouble("8.5");
         assertTrue(returned);
     }
-    
+
     @Test
     public void isDoubleReturnsFalseWhenNotGivenDouble() {
         Boolean returned = budgetService.isDouble("notADouble");
         assertFalse(returned);
     }
-    
+
     @Test
     public void updateBudgetAmountUpdatesAmount() {
         assertTrue(budgetService.updateBudgetAmount(1000.0, user, "lomamatka"));
     }
-    
+
     @Test
     public void updateBudgetNameUpdatesName() {
-        assertTrue(budgetService.updateBudgetName("lomamatka", user, "lomamatka"));
+        assertTrue(budgetService.updateBudgetName("loma", user, "lomamatka"));
     }
-    
+
     @Test
     public void deleteUserExpensesDeletesExpenses() {
         assertTrue(budgetService.deleteUserExpenses(user));
     }
-    
+
     @Test
     public void deleteUserDeletesUser() {
         assertTrue(budgetService.deleteUser(user));

@@ -50,8 +50,8 @@ public class FakeBudgetDao implements BudgetDao {
 
     @Override
     public Budget findOne(String budgetName, String username) throws SQLException {
-        for(int i = 0; i < budgets.size(); i++) {
-            if(budgets.get(i).getName().equals(budgetName)) {
+        for (int i = 0; i < budgets.size(); i++) {
+            if (budgets.get(i).getName().equals(budgetName)) {
                 Budget budget = new Budget(budgets.get(i).getName(), budgets.get(i).getAmount());
                 return budget;
             }
@@ -78,6 +78,5 @@ public class FakeBudgetDao implements BudgetDao {
     public void updateBudgetAmount(int id, Double amount) throws SQLException {
         budgets.get(id - 1).setAmount(amount);
     }
-    
-    
+
 }

@@ -160,8 +160,10 @@ public class App {
             String newName = nameField.getText();
             String newPassword = passwordField.getText();
 
-            if (newUsername.length() < 3 || newName.length() < 2 || newPassword.length() < 3) {
+            if (newUsername.trim().length() < 3 || newName.trim().length() < 1 || newPassword.trim().length() < 3) {
                 messageCreate.setText("Käyttäjätunnus tai salasana liian lyhyt");
+            } else if (newUsername.trim().length() > 40) {
+                messageCreate.setText("Käyttäjätunnus liian pitkä");
             } else {
                 try {
                     if (budgetService.createUser(newUsername, newName, newPassword)) {
@@ -345,6 +347,19 @@ public class App {
             } else if (!budgetService.isDouble(expensePrice.getText())) {
                 notification.setText(expensePrice.getText() + " ei ole luku!");
                 return;
+            } else if (budgetService.isDouble(expensePrice.getText())) {
+                if (Double.parseDouble(expensePrice.getText()) < 0) {
+                    notification.setText("Luku ei saa olla negatiivinen");
+                    return;
+                }
+            }
+
+            if (expenseName.getText().trim().length() < 1) {
+                notification.setText("Syötä nimi!");
+                return;
+            } else if (expenseName.getText().trim().length() > 30) {
+                notification.setText("Liian pitkä nimi!");
+                return;
             }
 
             if (budgetService.createExpense(user.getUsername(), cb.getValue().toString(), expenseName.getText(), Double.parseDouble(expensePrice.getText()))) {
@@ -411,6 +426,18 @@ public class App {
         submit.setOnAction((event) -> {
             if (!budgetService.isDouble(amount.getText())) {
                 notification.setText(amount.getText() + " ei ole luku");
+                return;
+            } else if (budgetService.isDouble(amount.getText())) {
+                if (Double.parseDouble(amount.getText()) < 0) {
+                    notification.setText("Luku ei saa olla negatiivinen!");
+                    return;
+                }
+            }
+            if (budget.getText().trim().length() < 1) {
+                notification.setText("Syötä nimi!");
+                return;
+            } else if (budget.getText().trim().length() > 40) {
+                notification.setText("Liian pitkä nimi!");
                 return;
             }
 
@@ -539,7 +566,7 @@ public class App {
         VBox view = new VBox();
         view.getChildren().addAll(info, pane, formWithHeader, notification, returnButton);
         view.setPadding(new Insets(90, 210, 200, 20));
-        view.setSpacing(50);
+        view.setSpacing(30);
 
         scene = new Scene(view, 820, 600);
         primaryStage.setScene(scene);
@@ -549,9 +576,18 @@ public class App {
         });
 
         updateName.setOnAction((event) -> {
+            if (newName.getText().trim().length() < 1) {
+                notification.setText("Syötä nimi!");
+                return;
+            } else if (newName.getText().trim().length() > 40) {
+                notification.setText("Liian pitkä nimi!");
+                return;
+            }
             if (budgetService.updateBudgetName(newName.getText(), user, budget.getName())) {
                 budget = budgetService.getBudgetByName(newName.getText(), user);
                 budgetInfoScene();
+            } else {
+                notification.setText("Saman niminen budjetti on jo olemassa!");
             }
         });
 
@@ -559,6 +595,11 @@ public class App {
             if (!budgetService.isDouble(newAmount.getText())) {
                 notification.setText(newAmount.getText() + " ei ole luku");
                 return;
+            } else if (budgetService.isDouble(newAmount.getText())) {
+                if (Double.parseDouble(newAmount.getText()) < 0) {
+                    notification.setText("Luku ei saa olla negatiivinen!");
+                    return;
+                }
             }
             if (budgetService.updateBudgetAmount(Double.parseDouble(newAmount.getText()), user, budget.getName())) {
                 budget = budgetService.getBudgetByName(budget.getName(), user);

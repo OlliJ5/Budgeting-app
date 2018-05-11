@@ -12,7 +12,7 @@ public interface ExpenseDao {
 
     /**
      * Uuden kulun luonti
-     * 
+     *
      * @param id Budjetin id, johon kulu liittyy
      * @param name Kulun nimi
      * @param price Kulun hinta
@@ -27,20 +27,20 @@ public interface ExpenseDao {
      * @return Lista Expense-olioita
      */
     List<Expense> getAllFromABudget(int budgetId) throws SQLException;
-    
+
     /**
      * Poistaa kaikki kulut budjetista
-     * 
+     *
      * @param budgetId Budjetin id, josta kulut halutaan poistaa
      */
     void deleteExpensesFromBudget(int budgetId) throws SQLException;
-    
+
     /**
      * Tietyn kulun poistaminen
-     * 
+     *
      * @param budgetId Budjetin id, johon poistettava kulu liittyy
      * @param expense Kulu, joka halutaan poistaa
      */
     void delete(int budgetId, Expense expense) throws SQLException;
-    
+
 }

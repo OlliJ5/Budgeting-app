@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class SqlUserDaoTest {
 
@@ -22,10 +23,12 @@ public class SqlUserDaoTest {
         userDao = new SqlUserDao(database);
         Connection connection = database.getConnection();
 
+        String pwHash = BCrypt.hashpw("testPassword", BCrypt.gensalt());
+
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO User(username, name, password) VALUES (?, ?, ?);");
         stmt.setString(1, "testUsername");
         stmt.setString(2, "testName");
-        stmt.setString(3, "testPassword");
+        stmt.setString(3, pwHash);
         stmt.executeUpdate();
         stmt.close();
         connection.close();
@@ -33,11 +36,9 @@ public class SqlUserDaoTest {
 
     @Test
     public void findsUserByUsername() throws Exception {
-        User user = new User("testUsername", "testName", "testPassword");
-
-        assertEquals(user, userDao.findByUsername("testUsername"));
+        assertEquals("testUsername", userDao.findByUsername("testUsername").getUsername());
     }
-    
+
     @Test
     public void findByUsernameReturnsNullIfUserDoesNotExist() throws Exception {
         assertEquals(null, userDao.findByUsername("wrong"));
@@ -59,12 +60,22 @@ public class SqlUserDaoTest {
     public void returnsFalseWhenUsernameDoesNotExist() throws Exception {
         assertFalse(userDao.usernameExists("wrong"));
     }
-    
+
     @Test
     public void deletionWorks() throws Exception {
         User user = new User("testUsername", "testName", "testPassword");
         userDao.delete(user);
         assertFalse(userDao.usernameExists("testUsername"));
+    }
+
+    @Test
+    public void usernameAndPasswordCorrectReturnsTrueWhenCorrect() throws Exception {
+        assertTrue(userDao.usernameAndPasswordCorrect("testUsername", "testPassword"));
+    }
+
+    @Test
+    public void usernameAndPasswordCorrectReturnFalseWhenFalse() throws Exception {
+        assertFalse(userDao.usernameAndPasswordCorrect("wrong", "false"));
     }
 
     @After

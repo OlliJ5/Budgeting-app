@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 /**
  *
  * @author ogrousu
@@ -43,19 +42,19 @@ public class SqlExpenseDaoTest {
         List<Expense> expenses = expenseDao.getAllFromABudget(1);
         assertEquals(expense, expenses.get(1));
     }
-    
+
     @Test
     public void getAllFrombudget() throws Exception {
         List<Expense> expenses = expenseDao.getAllFromABudget(1);
         assertEquals(1, expenses.size());
     }
-    
+
     @Test
     public void deletionWorks() throws Exception {
         expenseDao.delete(1, new Expense("ruokailu", 15.50));
         assertTrue(expenseDao.getAllFromABudget(1).isEmpty());
     }
-    
+
     @Test
     public void deleteAllExpensesFromBudgetWorks() throws Exception {
         expenseDao.create(1, "lennot", 500.0);

@@ -11,6 +11,7 @@ public interface UserDao {
 
     /**
      * Uuden käyttäjän luominen
+     *
      * @param user Käyttäjä-olio, joka halutaan luoda
      * @return Palauttaa luodun käyttäjän
      */
@@ -18,7 +19,7 @@ public interface UserDao {
 
     /**
      * Tarkistaa onko käyttäjätunnus jo olemassa
-     * 
+     *
      * @param name Käyttäjätunnus
      * @return Palauttaa true, jos käyttäjätunnus on jo olemassa, muuten false
      */
@@ -34,18 +35,20 @@ public interface UserDao {
 
     /**
      * Tarkistaa, liittyvätkö käyttäjätunnus ja salasana yhteen
-     * 
+     *
      * @param name Tarkistettava käyttäjätunnus
      * @param password Tarkistettava salasana
-     * @return True, jos käyttäjätunnus ja salasana liittyvät yhteen, muuten false
+     * @return True, jos käyttäjätunnus ja salasana liittyvät yhteen, muuten
+     * false
      */
     boolean usernameAndPasswordCorrect(String name, String password) throws SQLException;
-    
+
     /**
      * Käyttäjän poistaminen
+     *
      * @param user käyttäjä, joka halutaan poistaa
      * @return poistettu käyttäjä
      */
     User delete(User user) throws SQLException;
-    
+
 }

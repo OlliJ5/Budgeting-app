@@ -36,7 +36,7 @@ public class Budget {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

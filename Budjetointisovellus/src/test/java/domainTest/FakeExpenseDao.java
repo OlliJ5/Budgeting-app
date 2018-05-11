@@ -35,8 +35,8 @@ public class FakeExpenseDao implements ExpenseDao {
 
     @Override
     public void delete(int budgetId, Expense expense) throws SQLException {
-        for(int i = 0; i < expenses.size(); i++) {
-            if(expenses.get(i).getName().equals(expense.getName())) {
+        for (int i = 0; i < expenses.size(); i++) {
+            if (expenses.get(i).getName().equals(expense.getName())) {
                 expenses.remove(i);
             }
         }

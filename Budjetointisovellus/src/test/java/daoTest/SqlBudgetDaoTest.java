@@ -84,7 +84,7 @@ public class SqlBudgetDaoTest {
         int sizeAfterRemoval = budgetDao.findBudgetsByUsername(user.getUsername()).size();
         assertEquals(sizeBeforeRemoval, sizeAfterRemoval + 1);
     }
-    
+
     @Test
     public void updateBudgetNameUpdatesNameCorrectly() throws Exception {
         int idBeforeNameChange = budgetDao.getIdByNameAndUsername(user.getUsername(), "testName");
@@ -92,7 +92,7 @@ public class SqlBudgetDaoTest {
         int idAfterNameChange = budgetDao.getIdByNameAndUsername(user.getUsername(), "testNameUpdated");
         assertEquals(idBeforeNameChange, idAfterNameChange);
     }
-    
+
     @Test
     public void updateBudgetAmount() throws Exception {
         int id = budgetDao.getIdByNameAndUsername(user.getUsername(), "testName");

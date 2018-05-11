@@ -279,6 +279,9 @@ public class BudgetService {
      */
     public boolean updateBudgetName(String newName, User user, String oldName) {
         try {
+            if (budgetDao.budgetExists(new Budget(newName, 0), user.getUsername())) {
+                return false;
+            }
             int id = budgetDao.getIdByNameAndUsername(user.getUsername(), oldName);
             budgetDao.updateBudgetName(id, newName);
         } catch (Exception e) {
