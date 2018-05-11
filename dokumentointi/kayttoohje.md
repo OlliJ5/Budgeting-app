@@ -53,5 +53,8 @@ Budjetin tietojen muokkaus onnistuu painamalla päänäkymästä ylhäällä ole
 Budjetin nimeä voi muutta syöttämällä uuden nimen tekstikenttään ja painamalla 'Muuta nimi'. Budjetin määrää voi muuttaa syöttämällä budjetin uuden määrän tekstikenttään ja painamalla 'Muuta määrää'.
 
 ## Käyttäjän poistaminen
-Jos haluat poistaa käyttäjäsi. Paina päänäkymästä vasemmalta reunalta 'Käyttäjän tiedot', jolloin avautuu uusi näkymä ja paina sitten 'Poista käyttäjä' ja valitse sitten vielä ok.
+Jos haluat poistaa käyttäjäsi. Paina päänäkymästä vasemmalta reunalta 'Käyttäjän tiedot', jolloin avautuu uusi näkymä: 
 <img src="https://github.com/OlliJ5/otm-harjoitustyo/blob/master/dokumentointi/kuvat/k%C3%A4ytt%C3%A4j%C3%A4n%20poisto.png" width="500">
+
+Paina sitten 'Poista käyttäjä' ja valitse sitten vielä ok.
+
